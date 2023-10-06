@@ -1564,6 +1564,7 @@ __metadata:
   resolution: "@beccamose/nextjs@workspace:packages/nextjs"
   dependencies:
     "@apollo/client": ^3.7.12
+    "@beccamose/sdk": "workspace:*"
     "@ethersproject/providers": ^5.7.2
     "@heroicons/react": ^2.0.11
     "@rainbow-me/rainbowkit": 1.0.8
@@ -1610,11 +1611,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@beccamose/sdk@workspace:packages/sdk":
+"@beccamose/sdk@workspace:*, @beccamose/sdk@workspace:packages/sdk":
   version: 0.0.0-use.local
   resolution: "@beccamose/sdk@workspace:packages/sdk"
   dependencies:
+    "@waku/interfaces": ^0.0.18
+    "@waku/react": ^0.0.5-77c40b4
+    "@waku/sdk": ^0.0.19
     check-export-map: ^1.3.0
+    protobufjs: ^7.2.5
     tsup: ^7.2.0
     typescript: ^5.2.2
   languageName: unknown

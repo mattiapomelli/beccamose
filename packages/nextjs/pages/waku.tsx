@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { Button } from "~~/components/ui/Button";
-import { useMessages } from "~~/hooks/useMessages";
-import { useSendMessage } from "~~/hooks/useSendMessage";
+import { useMessages, useSendMessage } from "~~/sdk";
 
 const WakuPage: NextPage = () => {
   const { sendMessage } = useSendMessage();

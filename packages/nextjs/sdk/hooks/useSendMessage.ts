@@ -1,6 +1,6 @@
+import { LocationMessage } from "../constants";
 import { LightNode } from "@waku/interfaces";
 import { useContentPair, useLightPush, useWaku } from "@waku/react";
-import { LocationMessage } from "~~/constants/waku";
 
 export const useSendMessage = () => {
   const { node } = useWaku<LightNode>();

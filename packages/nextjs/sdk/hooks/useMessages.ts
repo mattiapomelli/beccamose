@@ -1,6 +1,6 @@
+import { ILocationMessage, LocationMessage } from "../constants";
 import { LightNode, PageDirection } from "@waku/interfaces";
 import { useContentPair, useFilterMessages, useWaku } from "@waku/react";
-import { ILocationMessage, LocationMessage } from "~~/constants/waku";
 
 export const useMessages = () => {
   const { node } = useWaku<LightNode>();

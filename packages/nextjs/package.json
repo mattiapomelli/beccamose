@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.12",
+    "@beccamose/sdk": "workspace:*",
     "@ethersproject/providers": "^5.7.2",
     "@heroicons/react": "^2.0.11",
     "@rainbow-me/rainbowkit": "1.0.8",
