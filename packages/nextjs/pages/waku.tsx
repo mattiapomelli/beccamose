@@ -2,16 +2,18 @@ import type { NextPage } from "next";
 import { useGeolocated } from "react-geolocated";
 import { Button } from "~~/components/ui/Button";
 // import { Button } from "~~/components/ui/Button";
-import { useMessages } from "~~/sdk";
+import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
 import { useShareLocation } from "~~/sdk/hooks/useShareLocation";
 
 const WakuPage: NextPage = () => {
-  // const { sendMessage } = useSendMessage();
-  const { messages } = useMessages();
-
   const { shareLocation } = useShareLocation();
+  const { coords } = useReceiveLocation();
 
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
+  const {
+    coords: geoCoords,
+    isGeolocationAvailable,
+    isGeolocationEnabled,
+  } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: true,
       // enableHighAccuracy: true,
@@ -21,21 +23,21 @@ const WakuPage: NextPage = () => {
     watchPosition: true,
   });
 
-  console.log("Messages: ", messages);
-
-  console.log("isGeolocationEnabled", isGeolocationEnabled);
-  console.log("isGeolocationAvailable", isGeolocationAvailable);
-
   return (
     <div>
       <div>Is enabled: {isGeolocationEnabled.toString()}</div>
       <div>Is available: {isGeolocationAvailable.toString()}</div>
-      <div>Lat: {coords?.latitude}</div>
+      <div>Lat: {geoCoords?.latitude}</div>
       <div>
         Long:
-        {coords?.longitude}
+        {geoCoords?.longitude}
       </div>
       <Button onClick={() => shareLocation()}>Share</Button>
+      <div>Lat: {coords?.lat}</div>
+      <div>
+        Long:
+        {coords?.lng}
+      </div>
     </div>
   );
 };

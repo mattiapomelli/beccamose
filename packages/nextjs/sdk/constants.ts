@@ -5,7 +5,11 @@ export const CONTENT_TOPIC = "/beccamose/1";
 export interface ILocationMessage {
   timestamp: number;
   sender: string;
-  message: string;
+  message: {
+    lat: number;
+    lng: number;
+  };
+  nonce: number;
 }
 
 export const LocationMessage = new protobuf.Type("LocationMessage")

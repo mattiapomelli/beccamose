@@ -20,9 +20,13 @@ export const useMessages = () => {
     },
   });
 
-  const messages = decodedMessages.map(message =>
-    LocationMessage.decode(message.payload).toJSON(),
-  ) as ILocationMessage[];
+  const messages = decodedMessages.map(message => {
+    const json = LocationMessage.decode(message.payload).toJSON();
+    return {
+      ...json,
+      message: JSON.parse(json.message),
+    };
+  }) as ILocationMessage[];
 
   return {
     messages,

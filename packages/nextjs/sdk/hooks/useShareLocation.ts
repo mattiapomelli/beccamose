@@ -3,7 +3,7 @@ import { useSendMessage } from "./useSendMessage";
 import { useGeolocated } from "react-geolocated";
 
 export const useShareLocation = () => {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(true);
 
   const { sendMessage } = useSendMessage();
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
