@@ -1,5 +1,5 @@
 {
-  "name": "@se-2/subgraph",
+  "name": "@beccamose/subgraph",
   "version": "0.0.1",
   "scripts": {
     "abi-copy": "ts-node scripts/abi_copy.ts",
