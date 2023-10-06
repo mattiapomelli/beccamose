@@ -1,11 +1,15 @@
 import type { NextPage } from "next";
 import { useGeolocated } from "react-geolocated";
 import { Button } from "~~/components/ui/Button";
-import { useMessages, useSendMessage } from "~~/sdk";
+// import { Button } from "~~/components/ui/Button";
+import { useMessages } from "~~/sdk";
+import { useShareLocation } from "~~/sdk/hooks/useShareLocation";
 
 const WakuPage: NextPage = () => {
-  const { sendMessage } = useSendMessage();
+  // const { sendMessage } = useSendMessage();
   const { messages } = useMessages();
+
+  const { shareLocation } = useShareLocation();
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
     positionOptions: {
@@ -31,7 +35,7 @@ const WakuPage: NextPage = () => {
         Long:
         {coords?.longitude}
       </div>
-      <Button onClick={() => sendMessage()}>Send</Button>
+      <Button onClick={() => shareLocation()}>Share</Button>
     </div>
   );
 };
