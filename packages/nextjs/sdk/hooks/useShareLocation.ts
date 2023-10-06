@@ -16,6 +16,31 @@ export const useShareLocation = () => {
     watchPosition: true,
   });
 
+  // useEffect(() => {
+  //   if (!isGeolocationAvailable || !isGeolocationEnabled || !enabled) return;
+
+  //   const getCurrentPosition = () => {
+  //     console.log("Effect");
+
+  //     navigator.geolocation.getCurrentPosition(
+  //       position => {
+  //         console.log("Got Position");
+  //         sendMessage(JSON.stringify({ lat: position.coords.latitude, lng: position.coords.longitude }));
+  //       },
+  //       error => {
+  //         console.log("Error: ", error);
+  //       },
+  //       {
+  //         enableHighAccuracy: true,
+  //       },
+  //     );
+  //   };
+
+  //   const intervalId = setInterval(getCurrentPosition, 1000);
+
+  //   return () => clearInterval(intervalId);
+  // }, [isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled]);
+
   useEffect(() => {
     if (!coords || !isGeolocationAvailable || !isGeolocationEnabled || !enabled) return;
 

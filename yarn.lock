@@ -1567,6 +1567,7 @@ __metadata:
     "@beccamose/sdk": "workspace:*"
     "@ethersproject/providers": ^5.7.2
     "@heroicons/react": ^2.0.11
+    "@libp2p/interface-peer-store": ^2.0.4
     "@rainbow-me/rainbowkit": 1.0.8
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/node": ^17.0.35
@@ -3241,6 +3242,25 @@ __metadata:
   version: 1.0.8
   resolution: "@libp2p/interface-keys@npm:1.0.8"
   checksum: 08c2976b3436b6e4e6159d1c817bb9e41af41d159cb94afaa8c63cf0fbf8842b0e5ca758d6c38453a59d8e4e87cec3117e3c574d316b94fed8db842a77f6efb0
+  languageName: node
+  linkType: hard
+
+"@libp2p/interface-peer-id@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "@libp2p/interface-peer-id@npm:2.0.2"
+  dependencies:
+    multiformats: ^11.0.0
+  checksum: 70db48ee6757cf1c7badbc78b0c2357bb29724bc15f789e85cb00f0fdac80f0655c4474113b436fbe4e52c9cf627465dde7d7e3cd8d6a7ba53143d414f39f497
+  languageName: node
+  linkType: hard
+
+"@libp2p/interface-peer-store@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@libp2p/interface-peer-store@npm:2.0.4"
+  dependencies:
+    "@libp2p/interface-peer-id": ^2.0.0
+    "@multiformats/multiaddr": ^12.0.0
+  checksum: e6563e09dbb36abd17723d69a420f08549cf3cf7ce23690c0ffef507d1407bd6971084ab032b7887be8fb713b22bafcadc3f6dc10c23417e8a94c8c00247095f
   languageName: node
   linkType: hard
 

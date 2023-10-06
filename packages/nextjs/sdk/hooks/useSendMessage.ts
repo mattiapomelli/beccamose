@@ -16,7 +16,7 @@ export const useSendMessage = () => {
     // Create a new message object
     const protoMessage = LocationMessage.create({
       timestamp: Date.now(),
-      sender: "Alice",
+      sender: node?.libp2p.peerId.toString(),
       message,
       nonce: Math.floor(Math.random() * 1000000000000),
     });
