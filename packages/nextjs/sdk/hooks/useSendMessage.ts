@@ -11,8 +11,11 @@ export const useSendMessage = () => {
   const { coords } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: false,
+      // enableHighAccuracy: true,
     },
+    // suppressLocationOnMount: true,
     userDecisionTimeout: 5000,
+    watchPosition: true,
   });
 
   const sendMessage = async () => {
