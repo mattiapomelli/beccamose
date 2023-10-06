@@ -3,6 +3,8 @@ import type { AppProps } from "next/app";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
+import { Protocols } from "@waku/interfaces";
+import { ContentPairProvider, LightNodeProvider } from "@waku/react";
 import NextNProgress from "nextjs-progressbar";
 import { Toaster } from "react-hot-toast";
 import { useDarkMode } from "usehooks-ts";
@@ -10,6 +12,7 @@ import { WagmiConfig } from "wagmi";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
+import { CONTENT_TOPIC } from "~~/constants/waku";
 import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
@@ -42,21 +45,28 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={apolloClient}>
       <WagmiConfig config={wagmiConfig}>
-        <NextNProgress />
-        <RainbowKitProvider
-          chains={appChains.chains}
-          avatar={BlockieAvatar}
-          theme={isDarkTheme ? darkTheme() : lightTheme()}
+        <LightNodeProvider
+          options={{ defaultBootstrap: true }}
+          protocols={[Protocols.Store, Protocols.Filter, Protocols.LightPush]}
         >
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="relative flex flex-col flex-1">
-              <Component {...pageProps} />
-            </main>
-            <Footer />
-          </div>
-          <Toaster />
-        </RainbowKitProvider>
+          <ContentPairProvider contentTopic={CONTENT_TOPIC}>
+            <NextNProgress />
+            <RainbowKitProvider
+              chains={appChains.chains}
+              avatar={BlockieAvatar}
+              theme={isDarkTheme ? darkTheme() : lightTheme()}
+            >
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="relative flex flex-col flex-1">
+                  <Component {...pageProps} />
+                </main>
+                <Footer />
+              </div>
+              <Toaster />
+            </RainbowKitProvider>
+          </ContentPairProvider>
+        </LightNodeProvider>
       </WagmiConfig>
     </ApolloProvider>
   );
