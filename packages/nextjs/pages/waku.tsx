@@ -5,7 +5,7 @@ import { useHasMounted } from "~~/hooks/useHasMounted";
 import { useConnectedPeers } from "~~/sdk/hooks/useConnectedPeers";
 import { usePeerId } from "~~/sdk/hooks/usePeerId";
 // import { Button } from "~~/components/ui/Button";
-import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
+// import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
 import { useShareLocation } from "~~/sdk/hooks/useShareLocation";
 
 function orZero(value: undefined | number): number {
@@ -21,9 +21,9 @@ const WakuPage: NextPage = () => {
     enabled: true,
     publicKey: "0x",
   });
-  const { coords } = useReceiveLocation({
-    publicKey: "0x",
-  });
+  // const { coords } = useReceiveLocation({
+  //   publicKey: "0x",
+  // });
 
   const {
     coords: geoCoords,
@@ -71,11 +71,11 @@ const WakuPage: NextPage = () => {
         {geoCoords?.longitude}
       </div>
       <Button onClick={() => shareLocation()}>Share</Button>
-      <div>Other Lat: {coords?.latitude}</div>
+      {/* <div>Other Lat: {coords?.latitude}</div>
       <div>
         Other Long:
         {coords?.longitude}
-      </div>
+      </div> */}
     </div>
   );
 };
