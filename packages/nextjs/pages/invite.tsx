@@ -1,6 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
-import { useAccount } from "wagmi";
 import { ClipboardIcon } from "@heroicons/react/24/solid";
 import { CopyButton } from "~~/components/CopyButton";
 import { MetaHeader } from "~~/components/MetaHeader";
@@ -8,21 +6,10 @@ import { QrCode } from "~~/components/QrCode";
 // import { CopyButton } from "~~/components/ui/CopyButton";
 // import { useBurnerWallet } from "~~/hooks/scaffold-eth";
 import { useHasMounted } from "~~/hooks/useHasMounted";
-import { useDerivedAccountEncryption } from "~~/sdk/crypto";
+import { useDerivedAccount } from "~~/sdk/crypto";
 
 const InvitePage: NextPage = () => {
-  const { address } = useAccount();
-
-  const { getDerivedAccount, isWalletClientLoaded } = useDerivedAccountEncryption();
-
-  const { data: derivedAccount } = useQuery({
-    queryKey: ["publicKey", address],
-    queryFn: async () => {
-      const derivedAccount = await getDerivedAccount();
-      return derivedAccount;
-    },
-    enabled: isWalletClientLoaded,
-  });
+  const { derivedAccount } = useDerivedAccount();
 
   const hasMounted = useHasMounted();
 
