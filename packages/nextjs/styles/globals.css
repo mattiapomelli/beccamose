@@ -30,3 +30,19 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html::view-transition-old(root),
+html[data-theme="scaffoldEthDark"]::view-transition-new(root) {
+  z-index: 1;
+}
+
+html::view-transition-new(root),
+html[data-theme="scaffoldEthDark"]::view-transition-old(root) {
+  z-index: 9999;
+}
