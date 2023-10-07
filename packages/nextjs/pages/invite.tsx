@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
@@ -35,6 +36,7 @@ const InvitePage: NextPage = () => {
         {window.location.origin}/invite/{derivedAccount?.account.publicKey}
       </div>
       <CopyButton text={`${window.location.origin}/invite/${derivedAccount?.account.publicKey}`}>Copy</CopyButton>
+      <Link href={"/chats"}>Chats</Link>
     </div>
   );
 };

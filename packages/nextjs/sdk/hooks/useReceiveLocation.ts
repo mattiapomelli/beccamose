@@ -20,8 +20,13 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
 
       let failed = 0;
 
+      console.log(`--- Starting messages decryption`);
+
+      // Get last 10 messages
+      const lastMessages = messages.slice(-10);
+
       // Decrypt all messages
-      for (const message of messages) {
+      for (const message of lastMessages) {
         try {
           const decryptedPayload = await decryptMessage(message.message);
           const parsedPayload = JSON.parse(decryptedPayload);
@@ -38,13 +43,15 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
         }
       }
 
-      console.log(`--- Failed ${failed} decryptions out of ${messages.length} messages`);
+      console.log(`--- Failed ${failed} decryptions out of ${lastMessages.length} messages`);
       console.log("--- Decrypted received messages: ", decryptedMessages);
 
       // Get only messages of the current chat
       const filteredMessages = decryptedMessages.filter(
         message => message.message.senderPublicKey.toLowerCase() === publicKey.toLowerCase(),
       );
+
+      console.log("--- Decrypted received messages of this chat: ", filteredMessages);
 
       // Get last message (most recent location)
       const lastMessage = filteredMessages[filteredMessages.length - 1];

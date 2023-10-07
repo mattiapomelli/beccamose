@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useDerivedAccountEncryption } from "../crypto";
 import { ILocationChat, ILocationMessage } from "../types";
 import { decodeMessages } from "../utils";
@@ -14,16 +15,17 @@ export const useChats = () => {
     node,
     decoder,
     options: {
-      pageSize: 10,
+      pageSize: 1000,
       pageDirection: PageDirection.FORWARD,
       timeFilter: {
-        startTime: new Date(Date.now() - 1000 * 60 * 5), // 10 minutes ago
+        startTime: new Date(Date.now() - 1000 * 60 * 1), // 10 minutes ago
         endTime: new Date(),
       },
     },
   });
 
-  const decodedMessages = decodeMessages(messages);
+  // const decodedMessages = decodeMessages(messages);
+  const decodedMessages = useMemo(() => decodeMessages(messages), [messages]);
 
   console.log("--- Decoded chat messages: ", decodedMessages);
 
@@ -34,21 +36,27 @@ export const useChats = () => {
 
       let failed = 0;
 
-      // Decrypt all messages
+      // Get last 10 messages
+      const lastMessages = decodedMessages.slice(-10);
 
-      const decryptedPromises = decodedMessages.map(async message => {
+      // Decrypt all messages
+      console.log(`--- Starting chats decryption`);
+
+      const decryptedPromises = lastMessages.map(async (message, index) => {
+        console.log("Decrypting ", index);
         const decryptedPayload = await decryptMessage(message.message);
 
         try {
           const parsedPayload = JSON.parse(decryptedPayload);
+          console.log("Successfull decrypt ", index);
           return {
             ...message,
             message: parsedPayload,
           };
         } catch (error) {
+          console.log("Error decrypting", index);
           failed++;
 
-          // console.log("Error decrypting");
           return null;
         }
       });
@@ -57,7 +65,7 @@ export const useChats = () => {
         results.filter(result => result !== null),
       )) as ILocationMessage[];
 
-      console.log(`--- Failed ${failed} decryptions out of ${decodedMessages.length} messages`);
+      console.log(`--- Failed ${failed} decryptions out of ${lastMessages.length} messages`);
       console.log("--- Decrypted chat messages:", decryptedMessages);
 
       // console.log("Decrypted messages: ", decryptedMessages);

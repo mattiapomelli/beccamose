@@ -20,7 +20,7 @@ const ChatPageInner: NextPage = () => {
     publicKey: (otherPublicKey || "") as `0x${string}`,
   });
 
-  const { allConnected, lightPushPeers } = useConnectedPeers();
+  const { allConnected, lightPushPeers, filterPeers } = useConnectedPeers();
 
   if (!hasMounted) return null;
 
@@ -28,6 +28,7 @@ const ChatPageInner: NextPage = () => {
     <div>
       <div>Peers Connected: {allConnected?.length}</div>
       <div>Push Peers Connected: {lightPushPeers?.length}</div>
+      <div>Filter Peers Connected: {filterPeers?.length}</div>
       <div>Is location enabled: {isGeolocationEnabled.toString()}</div>
       <div>Is location available: {isGeolocationAvailable.toString()}</div>
       <div>My Lat: {coords?.latitude}</div>

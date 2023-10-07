@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { decodeMessages } from "../utils";
 import { LightNode } from "@waku/interfaces";
 import { useContentPair, useFilterMessages, useWaku } from "@waku/react";
@@ -15,7 +16,10 @@ export const useMessages = () => {
   });
 
   // Decode messages
-  const decodedMessages = decodeMessages(messages);
+
+  // const decodedMessages = decodeMessages(messages);
+  const decodedMessages = useMemo(() => decodeMessages(messages.slice(-10)), [messages]);
+
   // console.log("Messages: ", decodedMessages);
 
   // Get messages that were not sent by the current user

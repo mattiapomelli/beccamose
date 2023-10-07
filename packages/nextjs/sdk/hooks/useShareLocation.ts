@@ -59,8 +59,6 @@ export const useShareLocation = (params: UseShareLocationParams) => {
     if (!coords || !isGeolocationAvailable || !isGeolocationEnabled || !enabled || !address || !publicKey) return;
 
     const sendLocationMessage = async () => {
-      console.log(">>> Sending location message");
-
       const derivedAccount = await getDerivedAccount();
 
       // const publicKey = "0x0447297d2906a3daab0b4968b16e6fb7600bbe00dc5edec32e215c635fb1a9d308bb2b0b4168fd37d5e1859c8da5a0895552a43b509bd9702ed129b9ba5530fd2c";
@@ -81,7 +79,7 @@ export const useShareLocation = (params: UseShareLocationParams) => {
     };
 
     // Every X seconds send a message with the current location
-    const intervalId = setInterval(sendLocationMessage, 1500);
+    const intervalId = setInterval(sendLocationMessage, 5000);
 
     return () => clearInterval(intervalId);
   }, [
