@@ -50,8 +50,9 @@ contract Beccamose is ERC721, ERC721URIStorage, Ownable {
         string memory svg = string(abi.encodePacked(
             '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="150">',
             '<text x="0" y="15" font-family="Verdana" font-size="15">Proof of meet</text>',
-            '<text x="0" y="40" font-family="Verdana" font-size="10">Latitude: ', metadata.latitude, '</text>',
-            '<text x="0" y="60" font-family="Verdana" font-size="10">Longitude: ', metadata.longitude, '</text>',
+            '<text x="0" y="25" font-family="Verdana" font-size="10">(se semo beccati)</text>',
+            '<text x="0" y="50" font-family="Verdana" font-size="10">Latitude: ', metadata.latitude, '</text>',
+            '<text x="0" y="70" font-family="Verdana" font-size="10">Longitude: ', metadata.longitude, '</text>',
             '</svg>'
         ));
 
