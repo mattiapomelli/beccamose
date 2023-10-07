@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import { publicKeyToAddress } from "viem/accounts";
 import { useAccount } from "wagmi";
 import { Spinner } from "~~/components/Spinner";
 import { Button } from "~~/components/ui/Button";
@@ -35,13 +34,15 @@ const InvitePage: NextPage = () => {
 
   // Connected user has been invited
   return (
-    <div className="max-w-sm mx-auto">
-      {inviterPublicKey && <p>Start to share location with {publicKeyToAddress(inviterPublicKey as `0x${string}`)}</p>}
+    <div className="max-w-sm mx-auto flex flex-col items-center gap-6 mt-10">
+      <h1 className="text-3xl font-bold">Start to share your location</h1>
       <div className="flex items-center gap-2">
         <Link href={`/chat/${inviterPublicKey}`}>
           <Button>Start</Button>
         </Link>
-        <Button variant="outline">Decline</Button>
+        <Link href="/chats">
+          <Button variant="outline">Decline</Button>
+        </Link>
       </div>
     </div>
   );
