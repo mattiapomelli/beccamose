@@ -59,7 +59,8 @@ export const useShareLocation = (params: UseShareLocationParams) => {
     const sendLocationMessage = async () => {
       console.log(">>> Sending location message");
 
-      // const publicKey = "0x04d215413158bd253913dbca97ef3566e0d052a9b70f35ae7dbf1538ea30128a1dd5ab4bc09a5aac51172e2cf5b3153aef0d492fef515ce10d44fac20f0515d9aa";
+      const publicKey =
+        "0x0447297d2906a3daab0b4968b16e6fb7600bbe00dc5edec32e215c635fb1a9d308bb2b0b4168fd37d5e1859c8da5a0895552a43b509bd9702ed129b9ba5530fd2c";
       // const privateKey = "0x90e7ffacdc00dfa414e5e22c42a9a41c60e57db9ba539df8e797940f277ba95a"
       // const address = "0xC3B09aF11D14410B0AFC62DDC6B8f50b5049704e"
 

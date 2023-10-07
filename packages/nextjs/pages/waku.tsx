@@ -19,6 +19,7 @@ const WakuPage: NextPage = () => {
 
   const { shareLocation } = useShareLocation({
     enabled: true,
+    publicKey: "0x",
   });
   const { coords } = useReceiveLocation({
     address: "",

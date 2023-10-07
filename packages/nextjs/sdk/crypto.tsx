@@ -60,8 +60,11 @@ export const useDerivedAccountEncryption = () => {
   };
 
   const decryptMessage = async (encryptedMessage: any) => {
-    const { privateKey } = await getDerivedAccount();
-    const decryptedMessage = await EthCrypto.decryptWithPrivateKey(privateKey, encryptedMessage);
+    // const { privateKey } = await getDerivedAccount();
+    const decryptedMessage = await EthCrypto.decryptWithPrivateKey(
+      "0x3db9f5d5610a89985a292b3c3d4c0deb082c331a18a630d4e05ae53343d74cd7",
+      encryptedMessage,
+    );
     return decryptedMessage;
   };
 

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDerivedAccountEncryption } from "../crypto";
 import { useMessages } from "./useMessages";
 
 interface UseReceiveLocationParams {
@@ -6,6 +8,23 @@ interface UseReceiveLocationParams {
 
 export const useReceiveLocation = ({ address }: UseReceiveLocationParams) => {
   const { messages } = useMessages();
+  const { decryptMessage } = useDerivedAccountEncryption();
+
+  useEffect(() => {
+    const getDecryptedMessages = async () => {
+      const decryptedMessages = await Promise.all(
+        messages.map(async message => ({
+          ...message,
+          // @ts-ignore
+          message: await decryptMessage(message.message),
+        })),
+      );
+
+      console.log("Decrypted messages: ", decryptedMessages);
+    };
+
+    getDecryptedMessages();
+  }, [messages, decryptMessage]);
 
   // Get messages that were sent by the given address
   const filteredMessages = messages.filter(message => address.toLowerCase() === message.sender.toLowerCase());
