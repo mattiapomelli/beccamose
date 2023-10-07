@@ -32,12 +32,12 @@ export const useSendMessage = () => {
       const res = await push({ payload, timestamp });
 
       if (!res.errors) {
-        console.log("Message sent");
+        console.log(">>> Message sent");
       }
 
       return res;
     } catch (error) {
-      console.log("Error: ", error);
+      console.log(">>> Error sending message: ", error);
 
       return null;
     }

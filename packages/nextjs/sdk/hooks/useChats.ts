@@ -25,14 +25,13 @@ export const useChats = () => {
 
   const decodedMessages = decodeMessages(messages);
 
-  console.log("Decoded messages: ", decodedMessages);
-
-  // console.log("Messages: ", messages);
+  console.log("--- Decoded chat messages: ", decodedMessages);
 
   const { data: chats } = useQuery({
     queryKey: [decodedMessages],
     queryFn: async () => {
-      console.log("Decoded messages lenght:", decodedMessages.length);
+      // console.log("Decoded messages length:", decodedMessages.length);
+
       let failed = 0;
 
       // Decrypt all messages
@@ -48,6 +47,8 @@ export const useChats = () => {
           };
         } catch (error) {
           failed++;
+
+          // console.log("Error decrypting");
           return null;
         }
       });
@@ -56,7 +57,8 @@ export const useChats = () => {
         results.filter(result => result !== null),
       )) as ILocationMessage[];
 
-      console.log("Failed: ", failed);
+      console.log(`--- Failed ${failed} decryptions out of ${decodedMessages.length} messages`);
+      console.log("--- Decrypted chat messages:", decryptedMessages);
 
       // console.log("Decrypted messages: ", decryptedMessages);
 

@@ -11,12 +11,14 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
   const { messages } = useMessages();
   const { decryptMessage } = useDerivedAccountEncryption();
 
-  console.log("Received Messages: ", messages);
+  console.log("--- Received Messages: ", messages);
 
   const { data: coords } = useQuery({
     queryKey: [messages, publicKey],
     queryFn: async () => {
       const decryptedMessages: ILocationMessage[] = [];
+
+      let failed = 0;
 
       // Decrypt all messages
       for (const message of messages) {
@@ -29,11 +31,15 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
             message: parsedPayload,
           });
         } catch (error) {
-          console.log("Error decrypting: ", error);
+          failed++;
+
+          // console.log("Error decrypting");
           continue;
         }
       }
-      console.log("Decrypted messages: ", decryptedMessages);
+
+      console.log(`--- Failed ${failed} decryptions out of ${messages.length} messages`);
+      console.log("--- Decrypted received messages: ", decryptedMessages);
 
       // Get only messages of the current chat
       const filteredMessages = decryptedMessages.filter(

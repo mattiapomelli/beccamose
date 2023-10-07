@@ -61,7 +61,7 @@ export const useDerivedAccountEncryption = () => {
 
   const decryptMessage = async (encryptedMessage: any) => {
     const { privateKey } = await getDerivedAccount();
-    console.log("Private key: ", privateKey);
+    // console.log("Decrypting with private key: ", privateKey);
 
     const decryptedMessage = await EthCrypto.decryptWithPrivateKey(privateKey, encryptedMessage);
     return decryptedMessage;
