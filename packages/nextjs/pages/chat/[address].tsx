@@ -14,8 +14,7 @@ const ChatPageInner: NextPage = () => {
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useShareLocation({
     enabled: true,
-    publicKey:
-      "0x04d215413158bd253913dbca97ef3566e0d052a9b70f35ae7dbf1538ea30128a1dd5ab4bc09a5aac51172e2cf5b3153aef0d492fef515ce10d44fac20f0515d9aa",
+    publicKey: (otherPublicKey || "") as `0x${string}`,
   });
 
   const { coords: otherCoords } = useReceiveLocation({
