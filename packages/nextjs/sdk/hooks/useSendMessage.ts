@@ -1,16 +1,19 @@
 import { LocationMessage } from "../constants";
+import { useConnectedPeers } from "./useConnectedPeers";
 import { LightNode } from "@waku/interfaces";
 import { useContentPair, useLightPush, useWaku } from "@waku/react";
 
 export const useSendMessage = () => {
-  const { node } = useWaku<LightNode>();
+  const { node, isLoading } = useWaku<LightNode>();
   const { encoder } = useContentPair();
-  const { push: onPush } = useLightPush({ node, encoder });
+  const { push } = useLightPush({ node, encoder });
+
+  const { lightPushPeers } = useConnectedPeers();
 
   const sendMessage = async (message: string) => {
-    console.log("Sending message");
+    if (!push || lightPushPeers?.length === 0 || !node || isLoading) return;
 
-    if (!onPush) return;
+    console.log(">>> Sending message");
 
     const timestamp = new Date();
     // Create a new message object
@@ -23,7 +26,7 @@ export const useSendMessage = () => {
     // Serialise the message using Protobuf
     const payload = LocationMessage.encode(protoMessage).finish();
 
-    const res = await onPush({ payload, timestamp });
+    const res = await push({ payload, timestamp });
 
     return res;
   };

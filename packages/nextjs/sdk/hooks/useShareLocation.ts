@@ -45,11 +45,12 @@ export const useShareLocation = () => {
     if (!coords || !isGeolocationAvailable || !isGeolocationEnabled || !enabled) return;
 
     const sendLocationMessage = async () => {
+      console.log(">>> Sending location message");
       sendMessage(JSON.stringify({ lat: coords.latitude, lng: coords.longitude }));
     };
 
-    // Every 5 seconds send a message with the current location
-    const intervalId = setInterval(sendLocationMessage, 5000);
+    // Every X seconds send a message with the current location
+    const intervalId = setInterval(sendLocationMessage, 2000);
 
     return () => clearInterval(intervalId);
   }, [coords, isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled]);

@@ -6,7 +6,7 @@ export const useMessages = () => {
   const { node } = useWaku<LightNode>();
   const { decoder } = useContentPair();
 
-  const { messages: decodedMessages } = useFilterMessages({
+  const { messages: decodedMessages, ...rest } = useFilterMessages({
     node,
     decoder,
     // @ts-ignore
@@ -34,9 +34,10 @@ export const useMessages = () => {
 
   const filteredMessages = messages.filter(message => node?.libp2p.peerId.toString() !== message.sender);
 
-  console.log("Filtered messages: ", filteredMessages);
+  console.log("Other messages: ", filteredMessages);
 
   return {
     messages: filteredMessages,
+    ...rest,
   };
 };

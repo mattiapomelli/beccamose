@@ -1,6 +1,6 @@
 import protobuf from "protobufjs";
 
-export const CONTENT_TOPIC = "/beccamose/1";
+export const CONTENT_TOPIC = "/beccamose/1/location-sharing/proto";
 
 export interface ILocationMessage {
   timestamp: number;

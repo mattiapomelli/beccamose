@@ -1,16 +1,21 @@
-import { useEffect } from "react";
-// import type { Peer } from "@libp2p/interface-peer-store";
-import { LightNode } from "@waku/interfaces";
-import { useWaku } from "@waku/react";
 import type { NextPage } from "next";
 import { useGeolocated } from "react-geolocated";
 import { Button } from "~~/components/ui/Button";
+import { useHasMounted } from "~~/hooks/useHasMounted";
+import { useConnectedPeers } from "~~/sdk/hooks/useConnectedPeers";
+import { usePeerId } from "~~/sdk/hooks/usePeerId";
 // import { Button } from "~~/components/ui/Button";
 import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
 import { useShareLocation } from "~~/sdk/hooks/useShareLocation";
 
+function orZero(value: undefined | number): number {
+  return value || 0;
+}
+
 const WakuPage: NextPage = () => {
   // const [peers, setPeers] = useState<Peer[]>([]);
+
+  const hasMounted = useHasMounted();
 
   const { shareLocation } = useShareLocation();
   const { coords } = useReceiveLocation();
@@ -28,38 +33,33 @@ const WakuPage: NextPage = () => {
     watchPosition: true,
   });
 
-  const { node } = useWaku<LightNode>();
-  const peerIds = node?.libp2p.getPeers();
+  const peerId = usePeerId();
+  const { allConnected, filterPeers, lightPushPeers, storePeers } = useConnectedPeers();
 
-  useEffect(() => {
-    if (!node) return;
+  const allConnectedLength = orZero(allConnected?.length);
+  const lightPushPeersLength = orZero(lightPushPeers?.length);
+  const filterPeersLength = orZero(filterPeers?.length);
+  const storePeersLength = orZero(storePeers?.length);
 
-    const getPeers = async () => {
-      const peerIds = node.libp2p.getPeers();
-      const peers = await Promise.all(peerIds.map(id => node.libp2p.peerStore.get(id)));
-      // setPeers(peers);
-
-      console.log("Peers: ", peers);
-    };
-
-    getPeers();
-  }, [node]);
-
-  console.log("Peers: ", peerIds);
-
-  const peerId = node?.libp2p.peerId.toString();
+  if (!hasMounted) return null;
 
   return (
     <div>
-      <div>Peer id: {peerId}</div>
+      <div>My Peer id: {peerId}</div>
       <div>
-        Connected Peer ids:{" "}
-        {peerIds?.map(peerId => (
-          <div key={peerId.toString()}>- {peerId.toString()}</div>
-        ))}
+        <div>
+          Peers Connected: {allConnectedLength}
+          <br />
+          {/* {allConnected?.map(peerId => (
+            <div key={peerId.toString()}>- {peerId.toString()}</div>
+          ))} */}
+        </div>
+        <div className="mt-2">Store: {storePeersLength}</div>
+        <div>Filter: {filterPeersLength}</div>
+        <div>Light Push: {lightPushPeersLength}</div>
       </div>
-      <div>Is enabled: {isGeolocationEnabled.toString()}</div>
-      <div>Is available: {isGeolocationAvailable.toString()}</div>
+      <div>Is location enabled: {isGeolocationEnabled.toString()}</div>
+      <div>Is location available: {isGeolocationAvailable.toString()}</div>
       <div>My Lat: {geoCoords?.latitude}</div>
       <div>
         My Long:
