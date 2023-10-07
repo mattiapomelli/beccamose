@@ -21,7 +21,7 @@ const InvitePage: NextPage = () => {
   }
 
   // Connected user is inviting someone else
-  if (inviteAddress && inviteAddress === address) {
+  if (inviteAddress && inviteAddress.toLowerCase() === address.toLowerCase()) {
     return (
       <div>
         <div>

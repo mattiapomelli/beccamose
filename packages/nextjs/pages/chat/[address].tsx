@@ -1,4 +1,4 @@
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useHasMounted } from "~~/hooks/useHasMounted";
 import { useConnectedPeers } from "~~/sdk/hooks/useConnectedPeers";
@@ -6,8 +6,8 @@ import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
 import { useShareLocation } from "~~/sdk/hooks/useShareLocation";
 
 const ChatPage: NextPage = () => {
-  // const router = useRouter();
-  // const peerAddress = router.query.address?.toString();
+  const router = useRouter();
+  const otherAddress = router.query.address?.toString();
 
   const hasMounted = useHasMounted();
 
@@ -15,7 +15,9 @@ const ChatPage: NextPage = () => {
     enabled: true,
   });
 
-  const { coords: otherCoords } = useReceiveLocation();
+  const { coords: otherCoords } = useReceiveLocation({
+    address: otherAddress || "",
+  });
 
   const { allConnected } = useConnectedPeers();
 

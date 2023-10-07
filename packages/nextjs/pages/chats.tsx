@@ -14,7 +14,9 @@ const ChatsPage: NextPage = () => {
       <div>
         {chats.map(chat => (
           <Link key={chat.sender} href={`/chat/${chat.sender}`}>
-            {chat.sender} - {chat.timestamp}
+            <div>
+              {chat.sender} - {chat.timestamp}
+            </div>
           </Link>
         ))}
       </div>

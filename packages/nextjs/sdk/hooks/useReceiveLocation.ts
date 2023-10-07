@@ -1,9 +1,17 @@
 import { useMessages } from "./useMessages";
 
-export const useReceiveLocation = () => {
+interface UseReceiveLocationParams {
+  address: string;
+}
+
+export const useReceiveLocation = ({ address }: UseReceiveLocationParams) => {
   const { messages } = useMessages();
 
-  const lastMessage = messages[messages.length - 1];
+  // Get messages that were sent by the given address
+  const filteredMessages = messages.filter(message => address.toLowerCase() === message.sender.toLowerCase());
+  console.log("Filtered messages: ", filteredMessages);
+
+  const lastMessage = filteredMessages[filteredMessages.length - 1];
 
   return {
     coords: lastMessage

@@ -11,25 +11,14 @@ export const useMessages = () => {
   const { messages, ...rest } = useFilterMessages({
     node,
     decoder,
-    // @ts-ignore
-    // options: {
-    //   pageSize: 5,
-    //   pageDirection: PageDirection.FORWARD,
-    //   timeFilter: {
-    //     startTime: new Date().setTime(Date.now() - 1000 * 60 * 60 * 1), // 1 hour ago
-    //     endTime: new Date(),
-    //   },
-    // },
   });
 
-  // console.log("Decoded messages: ", decodedMessages);
-
+  // Decode messages
   const decodedMessages = decodeMessages(messages);
-
   console.log("Messages: ", decodedMessages);
 
-  const filteredMessages = decodedMessages.filter(message => address !== message.sender);
-
+  // Get messages that were not sent by the current user
+  const filteredMessages = decodedMessages.filter(message => address?.toLowerCase() !== message.sender.toLowerCase());
   console.log("Other messages: ", filteredMessages);
 
   return {

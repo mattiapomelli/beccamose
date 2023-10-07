@@ -20,7 +20,9 @@ const WakuPage: NextPage = () => {
   const { shareLocation } = useShareLocation({
     enabled: true,
   });
-  const { coords } = useReceiveLocation();
+  const { coords } = useReceiveLocation({
+    address: "",
+  });
 
   const {
     coords: geoCoords,
