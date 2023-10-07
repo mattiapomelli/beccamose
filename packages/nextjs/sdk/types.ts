@@ -1,10 +1,14 @@
+export interface ILocationMessagePayload {
+  lat: number;
+  lng: number;
+  senderPublicKey: string;
+  senderAddress: string;
+}
+
 export interface ILocationMessage {
   timestamp: number;
   sender: string;
-  message: {
-    lat: number;
-    lng: number;
-  };
+  message: ILocationMessagePayload;
   nonce: number;
 }
 

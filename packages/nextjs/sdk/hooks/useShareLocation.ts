@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import { ILocationMessagePayload } from "../types";
 import { useSendMessage } from "./useSendMessage";
 import { useGeolocated } from "react-geolocated";
+import { useAccount } from "wagmi";
 
 interface UseShareLocationParams {
   enabled?: boolean;
 }
 
 export const useShareLocation = (params?: UseShareLocationParams) => {
+  const { address } = useAccount();
   const initialEnabled = params?.enabled ?? false;
 
   const [enabled, setEnabled] = useState(initialEnabled);
@@ -48,18 +51,26 @@ export const useShareLocation = (params?: UseShareLocationParams) => {
   // }, [isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled]);
 
   useEffect(() => {
-    if (!coords || !isGeolocationAvailable || !isGeolocationEnabled || !enabled) return;
+    if (!coords || !isGeolocationAvailable || !isGeolocationEnabled || !enabled || !address) return;
 
     const sendLocationMessage = async () => {
       console.log(">>> Sending location message");
-      sendMessage(JSON.stringify({ lat: coords.latitude, lng: coords.longitude }));
+
+      const message: ILocationMessagePayload = {
+        lat: coords.latitude,
+        lng: coords.longitude,
+        senderPublicKey: "TODO",
+        senderAddress: address,
+      };
+
+      sendMessage(JSON.stringify(message));
     };
 
     // Every X seconds send a message with the current location
     const intervalId = setInterval(sendLocationMessage, 3000);
 
     return () => clearInterval(intervalId);
-  }, [coords, isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled]);
+  }, [coords, isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled, address]);
 
   const shareLocation = () => {
     setEnabled(true);
