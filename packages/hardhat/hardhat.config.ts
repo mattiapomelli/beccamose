@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
+
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
@@ -46,6 +47,15 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       accounts,
+    },
+    "base-goerli": {
+      url: "https://goerli.base.org",
+      accounts,
+    },
+  },
+  etherscan: {
+    apiKey: {
+      "base-goerli": "PLACEHOLDER_STRING",
     },
   },
   verify: {
