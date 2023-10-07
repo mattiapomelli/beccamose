@@ -4,12 +4,12 @@ import { CopyButton } from "~~/components/CopyButton";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { QrCode } from "~~/components/QrCode";
 
-const Invite: NextPage = () => {
+const InvitePage: NextPage = () => {
   return (
     <>
       <MetaHeader title="Beccamose | Invite" />
 
-      <section className="flex flex-col gap-y-4 items-center justify-center w-full">
+      <section className="flex flex-col gap-y-4 items-center justify-center w-full flex-1">
         <div className="flex flex-col gap-y-2 items-center justify-center">
           <h2>Scan the QR Code</h2>
           {/* ToDo --> Fix link */}
@@ -35,4 +35,4 @@ const Invite: NextPage = () => {
   );
 };
 
-export default Invite;
+export default InvitePage;
