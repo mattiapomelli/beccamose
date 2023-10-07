@@ -10,6 +10,7 @@ import { enrTree, wakuDnsDiscovery } from "@waku/dns-discovery";
 import { Protocols } from "@waku/interfaces";
 import { wakuPeerExchangeDiscovery } from "@waku/peer-exchange";
 import { ContentPairProvider, LightNodeProvider } from "@waku/react";
+import "leaflet/dist/leaflet.css";
 import NextNProgress from "nextjs-progressbar";
 import { Toaster } from "react-hot-toast";
 import { useDarkMode } from "usehooks-ts";

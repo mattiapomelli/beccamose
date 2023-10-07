@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useHasMounted } from "~~/hooks/useHasMounted";
@@ -5,7 +6,11 @@ import { useConnectedPeers } from "~~/sdk/hooks/useConnectedPeers";
 import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
 import { useShareLocation } from "~~/sdk/hooks/useShareLocation";
 
-const ChatPageInner: NextPage = () => {
+const Map = dynamic(() => import("../../components/my-map/my-map"), {
+  ssr: false,
+});
+
+const ChatPage: NextPage = () => {
   const router = useRouter();
   const otherPublicKey = router.query.publicKey?.toString();
 
@@ -26,7 +31,13 @@ const ChatPageInner: NextPage = () => {
 
   return (
     <div>
+      <Map
+        position1={[coords?.latitude || 0, coords?.longitude || 0]}
+        position2={[otherCoords?.latitude || 0, otherCoords?.longitude || 0]}
+      />
+
       <div className="bg-warning rounded-md p-4">
+        <h3 className="font-bold">Debug Zone</h3>
         <div>Peers Connected: {allConnected?.length}</div>
         <div>Push Peers Connected: {lightPushPeers?.length}</div>
         <div>Filter Peers Connected: {filterPeers?.length}</div>
@@ -45,10 +56,6 @@ const ChatPageInner: NextPage = () => {
       </div>
     </div>
   );
-};
-
-const ChatPage: NextPage = () => {
-  return <ChatPageInner />;
 };
 
 export default ChatPage;
