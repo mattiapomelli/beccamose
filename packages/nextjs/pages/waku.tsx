@@ -22,7 +22,7 @@ const WakuPage: NextPage = () => {
     publicKey: "0x",
   });
   const { coords } = useReceiveLocation({
-    address: "",
+    publicKey: "0x",
   });
 
   const {

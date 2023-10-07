@@ -26,6 +26,7 @@ export const useChats = () => {
 
   // Get last messages with unique senders
   const chats: ILocationChat[] = [];
+
   decodedMessages.forEach(message => {
     const index = chats.findIndex(lastMessage => lastMessage.sender.toLowerCase() === message.sender.toLowerCase());
     if (index === -1) {

@@ -18,7 +18,7 @@ const ChatPageInner: NextPage = () => {
   });
 
   const { coords: otherCoords } = useReceiveLocation({
-    address: otherPublicKey || "",
+    publicKey: (otherPublicKey || "") as `0x${string}`,
   });
 
   const { allConnected, lightPushPeers } = useConnectedPeers();
