@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { useSendMessage } from "./useSendMessage";
 import { useGeolocated } from "react-geolocated";
 
-export const useShareLocation = () => {
-  const [enabled, setEnabled] = useState(true);
+interface UseShareLocationParams {
+  enabled?: boolean;
+}
+
+export const useShareLocation = (params?: UseShareLocationParams) => {
+  const initialEnabled = params?.enabled ?? false;
+
+  const [enabled, setEnabled] = useState(initialEnabled);
 
   const { sendMessage } = useSendMessage();
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
@@ -50,7 +56,7 @@ export const useShareLocation = () => {
     };
 
     // Every X seconds send a message with the current location
-    const intervalId = setInterval(sendLocationMessage, 2000);
+    const intervalId = setInterval(sendLocationMessage, 3000);
 
     return () => clearInterval(intervalId);
   }, [coords, isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled]);
@@ -61,5 +67,6 @@ export const useShareLocation = () => {
 
   return {
     shareLocation,
+    coords,
   };
 };
