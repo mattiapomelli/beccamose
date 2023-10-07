@@ -15,7 +15,7 @@ export const useSendMessage = () => {
   const sendMessage = async (message: string) => {
     if (!push || lightPushPeers?.length === 0 || !node || isLoading) return;
 
-    console.log(">>> Sending message: ", message);
+    console.log(">>> Sending message: ", JSON.parse(message));
 
     const timestamp = new Date();
     const protoMessage = LocationMessage.create({
@@ -30,6 +30,11 @@ export const useSendMessage = () => {
 
     try {
       const res = await push({ payload, timestamp });
+
+      if (!res.errors) {
+        console.log("Message sent");
+      }
+
       return res;
     } catch (error) {
       console.log("Error: ", error);

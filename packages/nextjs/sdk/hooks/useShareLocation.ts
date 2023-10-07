@@ -73,6 +73,8 @@ export const useShareLocation = (params: UseShareLocationParams) => {
       };
 
       const encryptionClient = generateEncryptionClient(publicKey);
+      console.log("Public key: ", publicKey);
+
       const encryptedMessage = await encryptionClient.encryptMessage(JSON.stringify(message));
 
       sendMessage(JSON.stringify(encryptedMessage));

@@ -11,6 +11,8 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
   const { messages } = useMessages();
   const { decryptMessage } = useDerivedAccountEncryption();
 
+  console.log("Received Messages: ", messages);
+
   const { data: coords } = useQuery({
     queryKey: [messages, publicKey],
     queryFn: async () => {
@@ -18,15 +20,16 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
 
       // Decrypt all messages
       for (const message of messages) {
-        const decryptedPayload = await decryptMessage(message.message);
-
         try {
+          const decryptedPayload = await decryptMessage(message.message);
           const parsedPayload = JSON.parse(decryptedPayload);
+
           decryptedMessages.push({
             ...message,
             message: parsedPayload,
           });
         } catch (error) {
+          console.log("Error decrypting: ", error);
           continue;
         }
       }
@@ -39,7 +42,7 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
 
       // Get last message (most recent location)
       const lastMessage = filteredMessages[filteredMessages.length - 1];
-      if (!lastMessage) return [];
+      if (!lastMessage) return { latitude: 0, longitude: 0 };
 
       const lastCoords = {
         latitude: lastMessage.message.lat,

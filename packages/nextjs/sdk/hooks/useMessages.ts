@@ -16,15 +16,15 @@ export const useMessages = () => {
 
   // Decode messages
   const decodedMessages = decodeMessages(messages);
-  console.log("Messages: ", decodedMessages);
+  // console.log("Messages: ", decodedMessages);
 
   // Get messages that were not sent by the current user
   // const filteredMessages = decodedMessages.filter(message => address?.toLowerCase() !== message.sender.toLowerCase());
-  const filteredMessages = decodedMessages;
+  // const filteredMessages = decodedMessages;
   // console.log("Other messages: ", filteredMessages);
 
   return {
-    messages: filteredMessages,
+    messages: decodedMessages,
     ...rest,
   };
 };

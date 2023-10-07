@@ -14,5 +14,6 @@ export interface ILocationMessage {
 
 export interface ILocationChat {
   timestamp: number;
-  sender: string;
+  senderPublicKey: string;
+  senderAddress: string;
 }

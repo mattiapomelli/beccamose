@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useHasMounted } from "~~/hooks/useHasMounted";
 import { useConnectedPeers } from "~~/sdk/hooks/useConnectedPeers";
-// import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
+import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
 import { useShareLocation } from "~~/sdk/hooks/useShareLocation";
 
 const ChatPageInner: NextPage = () => {
@@ -16,9 +16,9 @@ const ChatPageInner: NextPage = () => {
     publicKey: (otherPublicKey || "") as `0x${string}`,
   });
 
-  // const { coords: otherCoords } = useReceiveLocation({
-  //   publicKey: (otherPublicKey || "") as `0x${string}`,
-  // });
+  const { coords: otherCoords } = useReceiveLocation({
+    publicKey: (otherPublicKey || "") as `0x${string}`,
+  });
 
   const { allConnected, lightPushPeers } = useConnectedPeers();
 
@@ -35,11 +35,11 @@ const ChatPageInner: NextPage = () => {
         My Long:
         {coords?.longitude}
       </div>
-      {/* <div>Other Lat: {otherCoords?.latitude}</div>
-    <div>
-      Other Long:
-      {otherCoords?.longitude}
-    </div> */}
+      <div>Other Lat: {otherCoords?.latitude}</div>
+      <div>
+        Other Long:
+        {otherCoords?.longitude}
+      </div>
     </div>
   );
 };

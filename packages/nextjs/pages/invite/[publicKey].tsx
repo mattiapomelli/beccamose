@@ -8,7 +8,7 @@ import { CopyButton } from "~~/components/ui/CopyButton";
 
 const InvitePage: NextPage = () => {
   const router = useRouter();
-  const inviteAddress = router.query.address?.toString();
+  const inviterPublicKey = router.query.publicKey?.toString();
 
   const { address, isConnecting, isReconnecting, isConnected } = useAccount();
 
@@ -21,13 +21,13 @@ const InvitePage: NextPage = () => {
   }
 
   // Connected user is inviting someone else
-  if (inviteAddress && inviteAddress.toLowerCase() === address.toLowerCase()) {
+  if (inviterPublicKey && inviterPublicKey.toLowerCase() === address.toLowerCase()) {
     return (
       <div>
         <div>
-          {window.location.origin}/invite/{inviteAddress}
+          {window.location.origin}/invite/{inviterPublicKey}
         </div>
-        <CopyButton text={`${window.location.origin}/invite/${inviteAddress}`}>Copy</CopyButton>
+        <CopyButton text={`${window.location.origin}/invite/${inviterPublicKey}`}>Copy</CopyButton>
       </div>
     );
   }
@@ -35,9 +35,9 @@ const InvitePage: NextPage = () => {
   // Connected user has been invited
   return (
     <div>
-      <p>Start to share location with {inviteAddress}</p>
+      <p>Start to share location with {inviterPublicKey}</p>
       <div className="flex items-center gap-2">
-        <Link href={`/chat/${inviteAddress}`}>
+        <Link href={`/chat/${inviterPublicKey}`}>
           <Button>Start</Button>
         </Link>
         <Button variant="outline">Decline</Button>
