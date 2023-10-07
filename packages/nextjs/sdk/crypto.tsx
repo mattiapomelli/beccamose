@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 import EthCrypto from "eth-crypto";
 import { Hex, PrivateKeyAccount, hashMessage } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
@@ -20,18 +21,34 @@ type DerivedAccount = {
 };
 
 interface DerivedAccountContextType {
-  derivedAccount: DerivedAccount | null;
-  setDerivedAccount: (derivedAccount: DerivedAccount) => void;
+  derivedAccount: DerivedAccount | undefined;
 }
 
 const DerivedAccountContext = createContext<DerivedAccountContextType | null>(null);
 
+const derivedAccountsCache = new Map<string, DerivedAccount>();
+
 export const DerivedAccountProvider = ({ children }: { children: React.ReactNode }) => {
-  const [derivedAccount, setDerivedAccount] = useState<DerivedAccount | null>(null);
+  const { data: walletClient } = useWalletClient();
+
+  const { data: derivedAccount } = useQuery({
+    queryKey: [walletClient?.account.address, walletClient],
+    queryFn: async () => {
+      if (!walletClient) throw new Error("Wallet client not initialized");
+
+      if (derivedAccountsCache.has(walletClient.account.address)) {
+        return derivedAccountsCache.get(walletClient.account.address) as DerivedAccount;
+      }
+
+      const derivedAccount = await generateDerivedAccount(walletClient);
+      derivedAccountsCache.set(walletClient.account.address, derivedAccount);
+      return derivedAccount;
+    },
+    enabled: !!walletClient?.account.address,
+  });
 
   const value = {
     derivedAccount,
-    setDerivedAccount,
   };
 
   return <DerivedAccountContext.Provider value={value}>{children}</DerivedAccountContext.Provider>;
@@ -46,28 +63,17 @@ export const useDerivedAccount = () => {
 };
 
 export const useDerivedAccountEncryption = () => {
-  const { derivedAccount, setDerivedAccount } = useDerivedAccount();
-  const { data: walletClient, isSuccess: isWalletClientLoaded } = useWalletClient();
-
-  const getDerivedAccount = async () => {
-    if (derivedAccount) return derivedAccount;
-
-    if (!walletClient) throw new Error("Wallet client not initialized");
-
-    const _derivedAccount = await generateDerivedAccount(walletClient);
-    setDerivedAccount(_derivedAccount);
-    return _derivedAccount;
-  };
+  const { derivedAccount } = useDerivedAccount();
 
   const decryptMessage = async (encryptedMessage: any) => {
-    const { privateKey } = await getDerivedAccount();
-    // console.log("Decrypting with private key: ", privateKey);
+    if (!derivedAccount) throw new Error("Derived account not initialized");
+    const { privateKey } = derivedAccount;
 
     const decryptedMessage = await EthCrypto.decryptWithPrivateKey(privateKey, encryptedMessage);
     return decryptedMessage;
   };
 
-  return { getDerivedAccount, decryptMessage, isWalletClientLoaded };
+  return { decryptMessage, derivedAccountReady: !!derivedAccount };
 };
 
 export const generateEncryptionClient = (publicKey: `0x${string}`) => {

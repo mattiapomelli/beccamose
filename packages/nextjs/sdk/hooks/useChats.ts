@@ -9,7 +9,7 @@ import { useContentPair, useStoreMessages, useWaku } from "@waku/react";
 export const useChats = () => {
   const { node } = useWaku<LightNode>();
   const { decoder } = useContentPair();
-  const { decryptMessage } = useDerivedAccountEncryption();
+  const { decryptMessage, derivedAccountReady } = useDerivedAccountEncryption();
 
   const { messages, ...rest } = useStoreMessages({
     node,
@@ -101,6 +101,7 @@ export const useChats = () => {
 
       return chats;
     },
+    enabled: derivedAccountReady,
   });
 
   // // Get last messages with unique senders

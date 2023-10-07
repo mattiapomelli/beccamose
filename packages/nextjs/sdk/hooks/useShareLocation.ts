@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { generateEncryptionClient, useDerivedAccountEncryption } from "../crypto";
+import { generateEncryptionClient, useDerivedAccount } from "../crypto";
 import { ILocationMessagePayload } from "../types";
 import { useSendMessage } from "./useSendMessage";
 import { useGeolocated } from "react-geolocated";
@@ -17,7 +17,7 @@ export const useShareLocation = (params: UseShareLocationParams) => {
 
   const [enabled, setEnabled] = useState(initialEnabled);
 
-  const { getDerivedAccount } = useDerivedAccountEncryption();
+  const { derivedAccount } = useDerivedAccount();
 
   const { sendMessage } = useSendMessage();
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
@@ -56,11 +56,18 @@ export const useShareLocation = (params: UseShareLocationParams) => {
   // }, [isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled]);
 
   useEffect(() => {
-    if (!coords || !isGeolocationAvailable || !isGeolocationEnabled || !enabled || !address || !publicKey) return;
+    if (
+      !derivedAccount ||
+      !coords ||
+      !isGeolocationAvailable ||
+      !isGeolocationEnabled ||
+      !enabled ||
+      !address ||
+      !publicKey
+    )
+      return;
 
     const sendLocationMessage = async () => {
-      const derivedAccount = await getDerivedAccount();
-
       // const publicKey = "0x0447297d2906a3daab0b4968b16e6fb7600bbe00dc5edec32e215c635fb1a9d308bb2b0b4168fd37d5e1859c8da5a0895552a43b509bd9702ed129b9ba5530fd2c";
 
       const message: ILocationMessagePayload = {
@@ -82,16 +89,7 @@ export const useShareLocation = (params: UseShareLocationParams) => {
     const intervalId = setInterval(sendLocationMessage, 5000);
 
     return () => clearInterval(intervalId);
-  }, [
-    coords,
-    isGeolocationAvailable,
-    isGeolocationEnabled,
-    sendMessage,
-    enabled,
-    address,
-    publicKey,
-    getDerivedAccount,
-  ]);
+  }, [derivedAccount, coords, isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled, address, publicKey]);
 
   const shareLocation = () => {
     setEnabled(true);

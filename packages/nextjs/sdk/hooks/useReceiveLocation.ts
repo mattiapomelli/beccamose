@@ -9,7 +9,7 @@ interface UseReceiveLocationParams {
 
 export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
   const { messages } = useMessages();
-  const { decryptMessage } = useDerivedAccountEncryption();
+  const { decryptMessage, derivedAccountReady } = useDerivedAccountEncryption();
 
   console.log("--- Received Messages: ", messages);
 
@@ -64,6 +64,7 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
 
       return lastCoords;
     },
+    enabled: derivedAccountReady,
   });
 
   // useEffect(() => {
