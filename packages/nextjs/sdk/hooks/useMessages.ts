@@ -19,7 +19,7 @@ export const useMessages = () => {
 
   // Get messages that were not sent by the current user
   const filteredMessages = decodedMessages.filter(message => address?.toLowerCase() !== message.sender.toLowerCase());
-  console.log("Other messages: ", filteredMessages);
+  // console.log("Other messages: ", filteredMessages);
 
   return {
     messages: filteredMessages,

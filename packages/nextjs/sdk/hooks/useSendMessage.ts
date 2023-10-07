@@ -15,7 +15,7 @@ export const useSendMessage = () => {
   const sendMessage = async (message: string) => {
     if (!push || lightPushPeers?.length === 0 || !node || isLoading) return;
 
-    console.log(">>> Sending message");
+    console.log(">>> Sending message: ", message);
 
     const timestamp = new Date();
     const protoMessage = LocationMessage.create({
@@ -28,9 +28,14 @@ export const useSendMessage = () => {
     // Serialise the message using Protobuf
     const payload = LocationMessage.encode(protoMessage).finish();
 
-    const res = await push({ payload, timestamp });
+    try {
+      const res = await push({ payload, timestamp });
+      return res;
+    } catch (error) {
+      console.log("Error: ", error);
 
-    return res;
+      return null;
+    }
   };
 
   return {

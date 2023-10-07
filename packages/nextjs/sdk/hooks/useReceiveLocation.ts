@@ -9,7 +9,7 @@ export const useReceiveLocation = ({ address }: UseReceiveLocationParams) => {
 
   // Get messages that were sent by the given address
   const filteredMessages = messages.filter(message => address.toLowerCase() === message.sender.toLowerCase());
-  console.log("Filtered messages: ", filteredMessages);
+  // console.log("Filtered messages: ", filteredMessages);
 
   const lastMessage = filteredMessages[filteredMessages.length - 1];
 

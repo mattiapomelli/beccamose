@@ -27,15 +27,19 @@ export const useConnectedPeers = () => {
 
     const listener = async () => {
       // find all the peers that are connected for diff protocols
-      const peerIds = node.libp2p.getPeers();
-      const peers = await Promise.all(peerIds.map(id => node.libp2p.peerStore.get(id)));
+      try {
+        const peerIds = node.libp2p.getPeers();
+        const peers = await Promise.all(peerIds.map(id => node.libp2p.peerStore.get(id)));
 
-      setPeers({
-        allConnected: peers.map(p => p.id),
-        storePeers: getPeerIdsForProtocol(node.store, peers),
-        filterPeers: getPeerIdsForProtocol(node.filter, peers),
-        lightPushPeers: getPeerIdsForProtocol(node.lightPush, peers),
-      });
+        setPeers({
+          allConnected: peers.map(p => p.id),
+          storePeers: getPeerIdsForProtocol(node.store, peers),
+          filterPeers: getPeerIdsForProtocol(node.filter, peers),
+          lightPushPeers: getPeerIdsForProtocol(node.lightPush, peers),
+        });
+      } catch (error) {
+        console.log("Error getting peers: ", error);
+      }
     };
 
     listener(); // populate peers before event is invoked
