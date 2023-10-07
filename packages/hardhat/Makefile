@@ -1,2 +1,2 @@
 deploy-base: 
-	npx hardhat deploy --network base-goerli
+	npx hardhat deploy-base --verify --network base-goerli

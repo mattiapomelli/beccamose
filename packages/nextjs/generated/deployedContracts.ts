@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Beccamose: {
-          address: "0x07B9837e81b917451690f2eF4752AC5F1434450B",
+          address: "0x07dAb0CdA962aeAEDf68bdbC606503c2Ae819d95",
           abi: [
             {
               inputs: [
