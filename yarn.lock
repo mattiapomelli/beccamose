@@ -1587,6 +1587,7 @@ __metadata:
     "@types/react": ^18.0.9
     "@types/react-blockies": ^1.4.1
     "@types/react-copy-to-clipboard": ^5.0.4
+    "@types/react-dom": ^18.2.11
     "@typescript-eslint/eslint-plugin": ^5.39.0
     "@uniswap/sdk-core": ^4.0.1
     "@uniswap/v2-sdk": ^3.0.1
@@ -5580,6 +5581,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:^18.2.11":
+  version: 18.2.11
+  resolution: "@types/react-dom@npm:18.2.11"
+  dependencies:
+    "@types/react": "*"
+  checksum: 70dbdd2f8836a797ab8a3771c773f51023aab187d4d88ed3733bb3f2cbc2146057788a0095a03637101aeab9a48fce0ea369f96a35fc07e785ef53b8ab870885
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^18.0.15, @types/react@npm:^18.0.9":
   version: 18.2.14
   resolution: "@types/react@npm:18.2.14"
@@ -7742,6 +7752,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "beccamose@workspace:."
   dependencies:
+    "@types/react-dom": ^18.2.11
     husky: ^8.0.1
     lint-staged: ^13.0.3
   languageName: unknown
