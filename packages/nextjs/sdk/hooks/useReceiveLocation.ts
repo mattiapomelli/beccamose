@@ -55,11 +55,12 @@ export const useReceiveLocation = ({ publicKey }: UseReceiveLocationParams) => {
 
       // Get last message (most recent location)
       const lastMessage = filteredMessages[filteredMessages.length - 1];
-      if (!lastMessage) return { latitude: 0, longitude: 0 };
+      if (!lastMessage) return { latitude: 0, longitude: 0, senderAddress: "" };
 
       const lastCoords = {
         latitude: lastMessage.message.lat,
         longitude: lastMessage.message.lng,
+        senderAddress: lastMessage.sender,
       };
 
       return lastCoords;
