@@ -37,7 +37,7 @@ export const DerivedAccountProvider = ({ children }: { children: React.ReactNode
   return <DerivedAccountContext.Provider value={value}>{children}</DerivedAccountContext.Provider>;
 };
 
-const useDerivedAccount = () => {
+export const useDerivedAccount = () => {
   const derivedAccount = useContext(DerivedAccountContext);
   if (!derivedAccount) {
     throw new Error("useDerivedAccount must be used within a DerivedAccountProvider");
@@ -47,7 +47,7 @@ const useDerivedAccount = () => {
 
 export const useDerivedAccountEncryption = () => {
   const { derivedAccount, setDerivedAccount } = useDerivedAccount();
-  const { data: walletClient } = useWalletClient();
+  const { data: walletClient, isSuccess: isWalletClientLoaded } = useWalletClient();
 
   const getDerivedAccount = async () => {
     if (derivedAccount) return derivedAccount;
@@ -61,11 +61,13 @@ export const useDerivedAccountEncryption = () => {
 
   const decryptMessage = async (encryptedMessage: any) => {
     const { privateKey } = await getDerivedAccount();
+    // console.log("Decrypting with private key: ", privateKey);
+
     const decryptedMessage = await EthCrypto.decryptWithPrivateKey(privateKey, encryptedMessage);
     return decryptedMessage;
   };
 
-  return { getDerivedAccount, decryptMessage };
+  return { getDerivedAccount, decryptMessage, isWalletClientLoaded };
 };
 
 export const generateEncryptionClient = (publicKey: `0x${string}`) => {
