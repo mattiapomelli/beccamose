@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { generateEncryptionClient } from "../crypto";
 import { ILocationMessagePayload } from "../types";
 import { useSendMessage } from "./useSendMessage";
 import { useGeolocated } from "react-geolocated";
@@ -6,11 +7,13 @@ import { useAccount } from "wagmi";
 
 interface UseShareLocationParams {
   enabled?: boolean;
+  publicKey: `0x${string}`;
 }
 
-export const useShareLocation = (params?: UseShareLocationParams) => {
+export const useShareLocation = (params: UseShareLocationParams) => {
   const { address } = useAccount();
   const initialEnabled = params?.enabled ?? false;
+  const publicKey = params?.publicKey ?? "";
 
   const [enabled, setEnabled] = useState(initialEnabled);
 
@@ -51,10 +54,14 @@ export const useShareLocation = (params?: UseShareLocationParams) => {
   // }, [isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled]);
 
   useEffect(() => {
-    if (!coords || !isGeolocationAvailable || !isGeolocationEnabled || !enabled || !address) return;
+    if (!coords || !isGeolocationAvailable || !isGeolocationEnabled || !enabled || !address || !publicKey) return;
 
     const sendLocationMessage = async () => {
       console.log(">>> Sending location message");
+
+      // const publicKey = "0x04d215413158bd253913dbca97ef3566e0d052a9b70f35ae7dbf1538ea30128a1dd5ab4bc09a5aac51172e2cf5b3153aef0d492fef515ce10d44fac20f0515d9aa";
+      // const privateKey = "0x90e7ffacdc00dfa414e5e22c42a9a41c60e57db9ba539df8e797940f277ba95a"
+      // const address = "0xC3B09aF11D14410B0AFC62DDC6B8f50b5049704e"
 
       const message: ILocationMessagePayload = {
         lat: coords.latitude,
@@ -63,14 +70,17 @@ export const useShareLocation = (params?: UseShareLocationParams) => {
         senderAddress: address,
       };
 
-      sendMessage(JSON.stringify(message));
+      const encryptionClient = generateEncryptionClient(publicKey);
+      const encryptedMessage = await encryptionClient.encryptMessage(JSON.stringify(message));
+
+      sendMessage(JSON.stringify(encryptedMessage));
     };
 
     // Every X seconds send a message with the current location
     const intervalId = setInterval(sendLocationMessage, 3000);
 
     return () => clearInterval(intervalId);
-  }, [coords, isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled, address]);
+  }, [coords, isGeolocationAvailable, isGeolocationEnabled, sendMessage, enabled, address, publicKey]);
 
   const shareLocation = () => {
     setEnabled(true);
