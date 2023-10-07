@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 // import { Button } from "~~/components/ui/Button";
-import { useSend } from "~~/sdk/hooks/useSend";
+import { useSend } from "~~/sdk-new/hooks/useSend";
 
 const InvitePage: NextPage = () => {
   const { send } = useSend();
