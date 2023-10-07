@@ -81,7 +81,7 @@ export const useShareLocation = (params: UseShareLocationParams) => {
     };
 
     // Every X seconds send a message with the current location
-    const intervalId = setInterval(sendLocationMessage, 3000);
+    const intervalId = setInterval(sendLocationMessage, 1500);
 
     return () => clearInterval(intervalId);
   }, [
