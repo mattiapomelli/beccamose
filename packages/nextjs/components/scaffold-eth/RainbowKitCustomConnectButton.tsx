@@ -90,7 +90,9 @@ export const RainbowKitCustomConnectButton = () => {
                       tabIndex={0}
                       className="btn btn-secondary btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 !h-auto"
                     >
-                      <BlockieAvatar address={account.address} size={24} ensImage={account.ensAvatar} />
+                      <div id="blokio">
+                        <BlockieAvatar address={account.address} size={24} ensImage={account.ensAvatar} />
+                      </div>
                       <span className="ml-2 mr-1">{account.displayName}</span>
                       <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
                     </label>

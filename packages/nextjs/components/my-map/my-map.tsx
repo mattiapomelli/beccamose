@@ -1,40 +1,53 @@
-// import { useState } from "react";
+import { useEffect, useState } from "react";
 import MarkerIcon from "./marker.svg";
-// import { LatLngExpression } from "leaflet";
+import html2canvas from "html2canvas";
 import L from "leaflet";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
-
-// import { AcademicCapIcon } from "@heroicons/react/24/outline";
-
-const iconPerson = new L.Icon({
-  iconUrl: MarkerIcon.src,
-  iconRetinaUrl: MarkerIcon.src,
-  // iconAnchor: null,
-  // popupAnchor: null,
-  // shadowUrl: null,
-  // shadowSize: null,
-  // shadowAnchor: null,
-  iconSize: new L.Point(30, 30),
-  className: "leaflet-div-icon rounded-full",
-});
+import { useAccount } from "wagmi";
 
 interface MyMapProps {
   position1: [number, number];
   position2: [number, number];
 }
 
+const otherPersonIcon = new L.Icon({
+  iconUrl: MarkerIcon.src,
+  iconRetinaUrl: MarkerIcon.src,
+  iconSize: new L.Point(30, 30),
+  className: "leaflet-div-icon rounded-full",
+});
+
+async function captureComponentAsImage() {
+  const node = document.querySelector("#blokio");
+  if (!node) return undefined;
+
+  const canvas = await html2canvas(node as HTMLElement);
+  const dataURL = canvas.toDataURL("image/png");
+
+  return dataURL;
+}
+
 const MyMap = ({ position1, position2 }: MyMapProps) => {
-  // const [position1] = useState<[number, number]>([51.505, -0.09]);
-  // const [position2] = useState<[number, number]>([51.705, -0.09]);
+  const [myPersonalIcon, setMyPersonalIcon] = useState<L.Icon>();
+  const { address } = useAccount();
 
-  // Calculate the center point
-  // const centerLatitude = (position1[0] + position2[0]) / 2;
-  // const centerLongitude = (position1[1] + position2[1]) / 2;
-  // const mapCenter = [centerLatitude, centerLongitude];
+  useEffect(() => {
+    const generateImage = async () => {
+      if (!address) return;
+      const url = await captureComponentAsImage();
+      const iconPerson = new L.Icon({
+        iconUrl: url ?? MarkerIcon.src,
+        iconRetinaUrl: url ?? MarkerIcon.src,
+        iconSize: new L.Point(30, 30),
+        className: "leaflet-div-icon rounded-full",
+      });
+      setMyPersonalIcon(iconPerson);
+    };
 
-  // const polyline = [position1, position2];
+    generateImage();
+  }, [address]);
 
-  if (position1[0] === 0 && position1[1] === 0) return null;
+  if ((position1[0] === 0 && position1[1] === 0) || !myPersonalIcon) return null;
 
   return (
     <MapContainer center={position1} zoom={50} style={{ height: "400px", width: "100%" }}>
@@ -42,9 +55,8 @@ const MyMap = ({ position1, position2 }: MyMapProps) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {/* <Polyline pathOptions={{ color: "blue" }} positions={polyline} /> */}
-      <Marker position={position1} icon={iconPerson} />
-      <Marker position={position2} icon={iconPerson} />
+      <Marker position={position1} icon={myPersonalIcon} />
+      <Marker position={position2} icon={otherPersonIcon} />
     </MapContainer>
   );
 };
