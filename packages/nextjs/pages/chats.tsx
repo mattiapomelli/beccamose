@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { useChats } from "~~/sdk/hooks/useChats";
 
 const ChatsPage: NextPage = () => {
   const { chats } = useChats();
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <>
@@ -32,7 +32,6 @@ const ChatsPage: NextPage = () => {
               <Link
                 key={chat.senderPublicKey}
                 href={`/chat/${chat.senderPublicKey}`}
-                onClick={() => router.push(`/chats/${chat.senderAddress}`)}
                 className="bg-primary text-primary-content rounded-btn p-4 w-full text-left"
               >
                 {chat.senderAddress}

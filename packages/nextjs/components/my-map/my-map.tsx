@@ -14,7 +14,7 @@ const iconPerson = new L.Icon({
   // shadowUrl: null,
   // shadowSize: null,
   // shadowAnchor: null,
-  iconSize: new L.Point(50, 50),
+  iconSize: new L.Point(30, 30),
   className: "leaflet-div-icon rounded-full",
 });
 
@@ -37,7 +37,7 @@ const MyMap = ({ position1, position2 }: MyMapProps) => {
   if (position1[0] === 0 && position1[1] === 0) return null;
 
   return (
-    <MapContainer center={position1} zoom={10} style={{ height: "400px", width: "100%" }}>
+    <MapContainer center={position1} zoom={50} style={{ height: "400px", width: "100%" }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
