@@ -19,8 +19,16 @@ export const saveBurnerSK = (privateKey: { sk: Hex }): void => {
 
 export const loadBurnerSK = (): { sk: Hex } => {
   let currentSk: Hex = "0x";
+
   if (typeof window != "undefined" && window != null) {
-    currentSk = (window?.localStorage?.getItem?.(burnerStorageKey)?.replaceAll('"', "") ?? "0x") as Hex;
+    try {
+      const skFromLocalStorage = JSON.parse(window?.localStorage?.getItem?.(burnerStorageKey) ?? "{}");
+      if (!!skFromLocalStorage && isValidSk(skFromLocalStorage.sk)) {
+        currentSk = skFromLocalStorage.sk;
+      }
+    } catch (e) {
+      currentSk = "0x";
+    }
   }
 
   if (!!currentSk && isValidSk(currentSk)) {
