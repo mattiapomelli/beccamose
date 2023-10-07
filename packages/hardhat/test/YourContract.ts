@@ -1,28 +1,25 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { YourContract } from "../typechain-types";
+import { Beccamose } from "../typechain-types";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
-describe("YourContract", function () {
+describe("Beccamose", function () {
   // We define a fixture to reuse the same setup in every test.
 
-  let yourContract: YourContract;
+  let Beccamose: Beccamose;
+  let owner: SignerWithAddress;
   before(async () => {
-    const [owner] = await ethers.getSigners();
-    const yourContractFactory = await ethers.getContractFactory("YourContract");
-    yourContract = (await yourContractFactory.deploy(owner.address)) as YourContract;
-    await yourContract.deployed();
+    [owner] = await ethers.getSigners();
+    const BeccamoseFactory = await ethers.getContractFactory("Beccamose");
+    Beccamose = (await BeccamoseFactory.deploy(owner.address)) as Beccamose;
+    await Beccamose.deployed();
   });
 
   describe("Deployment", function () {
-    it("Should have the right message on deploy", async function () {
-      expect(await yourContract.greeting()).to.equal("Building Unstoppable Apps!!!");
-    });
-
-    it("Should allow setting a new message", async function () {
-      const newGreeting = "Learn Scaffold-ETH 2! :)";
-
-      await yourContract.setGreeting(newGreeting);
-      expect(await yourContract.greeting()).to.equal(newGreeting);
+    it("Should allow owner to mint", async function () {
+      await Beccamose.safeMint(owner.address, "50", "50");
+      const uri = await Beccamose.tokenURI(0);
+      console.log(uri);
     });
   });
 });
