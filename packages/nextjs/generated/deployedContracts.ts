@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Beccamose: {
-          address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          address: "0x07B9837e81b917451690f2eF4752AC5F1434450B",
           abi: [
             {
               inputs: [
@@ -273,6 +273,25 @@ const contracts = {
               inputs: [
                 {
                   internalType: "address",
+                  name: "_address",
+                  type: "address",
+                },
+              ],
+              name: "addressToString",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "pure",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
                   name: "to",
                   type: "address",
                 },
@@ -409,14 +428,14 @@ const contracts = {
                   type: "address",
                 },
                 {
-                  internalType: "string",
-                  name: "latitude",
-                  type: "string",
+                  internalType: "address",
+                  name: "address1",
+                  type: "address",
                 },
                 {
-                  internalType: "string",
-                  name: "longitude",
-                  type: "string",
+                  internalType: "address",
+                  name: "address2",
+                  type: "address",
                 },
               ],
               name: "safeMint",
@@ -536,14 +555,14 @@ const contracts = {
               name: "tokenMetadata",
               outputs: [
                 {
-                  internalType: "string",
-                  name: "latitude",
-                  type: "string",
+                  internalType: "address",
+                  name: "address1",
+                  type: "address",
                 },
                 {
-                  internalType: "string",
-                  name: "longitude",
-                  type: "string",
+                  internalType: "address",
+                  name: "address2",
+                  type: "address",
                 },
               ],
               stateMutability: "view",

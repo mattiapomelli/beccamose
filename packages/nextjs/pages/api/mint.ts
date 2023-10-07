@@ -16,21 +16,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).end();
   }
 
-  const { address, latitude, longitude } = req.body;
+  const { address, address1, address2 } = req.body;
 
-  if (!address || !latitude || !longitude) {
+  if (!address) {
     return res.status(400).json({ error: "Address, latitude, and longitude are required." });
   }
 
   // Use the mnemonic to restore the wallet (You can also use environment variables for security)
-  const mnemonic = "YOUR_MNEMONIC_HERE";
+  const mnemonic = process.env.MNEMONIC || "";
   const wallet = ethers.Wallet.fromMnemonic(mnemonic);
-  const provider = new ethers.providers.JsonRpcProvider("https://mainnet.infura.io/v3/YOUR_INFURA_KEY"); // Replace with your provider
+
+  // Connect to local network hardhat
+  const provider = new ethers.providers.JsonRpcProvider("http://localhost:8545"); // TODO: Replace with Base
+
   const signer = wallet.connect(provider);
   const contract = new ethers.Contract(deployedBeccamoseContract.address, deployedBeccamoseContract.abi, signer);
 
   try {
-    const tx = await contract.safeMint(address, Date.now(), latitude, longitude); // Using Date.now() as a placeholder for tokenId. Replace with your own logic if needed.
+    const tx = await contract.safeMint(address, address1, address2);
     await tx.wait();
 
     return res.status(200).json({ success: true, transactionHash: tx.hash });
