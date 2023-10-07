@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.12",
-    "@beccamose/sdk": "workspace:*",
     "@ethersproject/providers": "^5.7.2",
     "@heroicons/react": "^2.0.11",
     "@libp2p/interface-peer-store": "^2.0.4",
@@ -74,6 +73,6 @@
     "prettier": "^2.8.4",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.1.6",
-    "vercel": "^28.15.1"
+    "vercel": "latest"
   }
 }
