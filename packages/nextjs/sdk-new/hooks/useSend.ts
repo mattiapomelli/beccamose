@@ -1,4 +1,4 @@
-import { CONTENT_TOPIC, chatMessage } from "../constants";
+import { CONTENT_TOPIC, locationMessage } from "../constants";
 import { useNode } from "./useNode";
 import { createEncoder } from "@waku/sdk";
 
@@ -12,14 +12,14 @@ export const useSend = () => {
     const encoder = createEncoder({ contentTopic: CONTENT_TOPIC });
 
     // Create a new message object
-    const protoMessage = chatMessage.create({
+    const protoMessage = locationMessage.create({
       timestamp: Date.now(),
       sender: "Alice",
       message,
     });
 
     // Serialise the message using Protobuf
-    const serialisedMessage = chatMessage.encode(protoMessage).finish();
+    const serialisedMessage = locationMessage.encode(protoMessage).finish();
 
     try {
       console.log("Sending message");

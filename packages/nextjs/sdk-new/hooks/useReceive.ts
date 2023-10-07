@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { CONTENT_TOPIC, chatMessage } from "../constants";
+import { CONTENT_TOPIC, locationMessage } from "../constants";
 import { useNode } from "./useNode";
 import { DecodedMessage, createDecoder } from "@waku/sdk";
 
@@ -16,7 +16,7 @@ export const useReceive = () => {
       if (!wakuMessage.payload) return;
 
       // Render the messageObj as desired in your application
-      const messageObj = chatMessage.decode(wakuMessage.payload);
+      const messageObj = locationMessage.decode(wakuMessage.payload);
       console.log(messageObj);
     };
 
