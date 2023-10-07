@@ -1,37 +1,26 @@
 import { useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { LatLngExpression } from "leaflet";
+import { MapContainer, Polyline, TileLayer } from "react-leaflet";
 
 const MyMap = () => {
-  const [position, setPosition] = useState<[number, number]>([51.505, -0.09]);
+  const [position1] = useState<[number, number]>([51.505, -0.09]);
+  const [position2] = useState<[number, number]>([51.705, -0.09]);
+
+  // Calculate the center point
+  const centerLatitude = (position1[0] + position2[0]) / 2;
+  const centerLongitude = (position1[1] + position2[1]) / 2;
+  const mapCenter = [centerLatitude, centerLongitude];
+
+  const polyline = [position1, position2];
 
   return (
-    <>
-      <MapContainer
-        center={position}
-        zoom={13}
-        scrollWheelZoom={true}
-        style={{ width: "100%", height: "calc(100vh - 4rem)" }}
-      >
-        <TileLayer
-          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
-      <button
-        onClick={() => {
-          const lat = position[0] * 1.00001;
-          const lng = position[1] * 1.00001;
-          setPosition([lat, lng]);
-        }}
-      >
-        CLICK ME
-      </button>
-    </>
+    <MapContainer center={mapCenter as LatLngExpression} zoom={10} style={{ height: "400px", width: "100%" }}>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Polyline pathOptions={{ color: "blue" }} positions={polyline} />
+    </MapContainer>
   );
 };
 
