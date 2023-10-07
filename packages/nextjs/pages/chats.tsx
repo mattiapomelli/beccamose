@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { NextPage } from "next";
 import { useChats } from "~~/sdk/hooks/useChats";
 
@@ -12,9 +13,9 @@ const ChatsPage: NextPage = () => {
 
       <div>
         {chats.map(chat => (
-          <div key={chat.sender}>
+          <Link key={chat.sender} href={`/chat/${chat.sender}`}>
             {chat.sender} - {chat.timestamp}
-          </div>
+          </Link>
         ))}
       </div>
     </div>

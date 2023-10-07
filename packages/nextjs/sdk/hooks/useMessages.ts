@@ -1,8 +1,10 @@
 import { decodeMessages } from "../utils";
 import { LightNode } from "@waku/interfaces";
 import { useContentPair, useFilterMessages, useWaku } from "@waku/react";
+import { useAccount } from "wagmi";
 
 export const useMessages = () => {
+  const { address } = useAccount();
   const { node } = useWaku<LightNode>();
   const { decoder } = useContentPair();
 
@@ -26,7 +28,7 @@ export const useMessages = () => {
 
   console.log("Messages: ", decodedMessages);
 
-  const filteredMessages = decodedMessages.filter(message => node?.libp2p.peerId.toString() !== message.sender);
+  const filteredMessages = decodedMessages.filter(message => address !== message.sender);
 
   console.log("Other messages: ", filteredMessages);
 

@@ -8,8 +8,8 @@ export const useReceiveLocation = () => {
   return {
     coords: lastMessage
       ? {
-          lat: lastMessage.message.lat,
-          lng: lastMessage.message.lng,
+          latitude: lastMessage.message.lat,
+          longitude: lastMessage.message.lng,
         }
       : undefined,
   };

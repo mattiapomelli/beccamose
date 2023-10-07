@@ -17,7 +17,9 @@ const WakuPage: NextPage = () => {
 
   const hasMounted = useHasMounted();
 
-  const { shareLocation } = useShareLocation();
+  const { shareLocation } = useShareLocation({
+    enabled: true,
+  });
   const { coords } = useReceiveLocation();
 
   const {
@@ -66,10 +68,10 @@ const WakuPage: NextPage = () => {
         {geoCoords?.longitude}
       </div>
       <Button onClick={() => shareLocation()}>Share</Button>
-      <div>Other Lat: {coords?.lat}</div>
+      <div>Other Lat: {coords?.latitude}</div>
       <div>
         Other Long:
-        {coords?.lng}
+        {coords?.longitude}
       </div>
     </div>
   );

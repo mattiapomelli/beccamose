@@ -68,5 +68,7 @@ export const useShareLocation = (params?: UseShareLocationParams) => {
   return {
     shareLocation,
     coords,
+    isGeolocationAvailable,
+    isGeolocationEnabled,
   };
 };

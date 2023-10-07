@@ -2,8 +2,10 @@ import { LocationMessage } from "../constants";
 import { useConnectedPeers } from "./useConnectedPeers";
 import { LightNode } from "@waku/interfaces";
 import { useContentPair, useLightPush, useWaku } from "@waku/react";
+import { useAccount } from "wagmi";
 
 export const useSendMessage = () => {
+  const { address } = useAccount();
   const { node, isLoading } = useWaku<LightNode>();
   const { encoder } = useContentPair();
   const { push } = useLightPush({ node, encoder });
@@ -19,7 +21,8 @@ export const useSendMessage = () => {
     // Create a new message object
     const protoMessage = LocationMessage.create({
       timestamp: Date.now(),
-      sender: node?.libp2p.peerId.toString(), // TODO: move sender inside the encrypted message
+      // sender: node?.libp2p.peerId.toString(), // TODO: move sender inside the encrypted message
+      sender: address, // TODO: move sender inside the encrypted message
       message,
       nonce: Math.floor(Math.random() * 1000000000000),
     });
