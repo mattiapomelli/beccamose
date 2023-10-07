@@ -19,7 +19,7 @@ const isValidSk = (pk: Hex | string | undefined | null): boolean => {
 /**
  * If no burner is found in localstorage, we will generate a random private key
  */
-const newDefaultPriaveKey = generatePrivateKey();
+const newDefaultPrivateKey = generatePrivateKey();
 
 /**
  * Save the current burner private key from storage
@@ -48,8 +48,8 @@ export const loadBurnerSK = (): Hex => {
   if (!!currentSk && isValidSk(currentSk)) {
     return currentSk;
   } else {
-    saveBurnerSK(newDefaultPriaveKey);
-    return newDefaultPriaveKey;
+    saveBurnerSK(newDefaultPrivateKey);
+    return newDefaultPrivateKey;
   }
 };
 
@@ -75,6 +75,7 @@ export type TBurnerSigner = {
    * explictly save burner to storage
    */
   saveBurner: () => void;
+  burnerSk: Hex;
 };
 
 /**
@@ -88,7 +89,7 @@ export type TBurnerSigner = {
  * @returns IBurnerSigner
  */
 export const useBurnerWallet = (): TBurnerSigner => {
-  const [burnerSk, setBurnerSk] = useLocalStorage<Hex>(burnerStorageKey, newDefaultPriaveKey);
+  const [burnerSk, setBurnerSk] = useLocalStorage<Hex>(burnerStorageKey, newDefaultPrivateKey);
 
   const publicClient = usePublicClient();
   const [walletClient, setWalletClient] = useState<WalletClient<HttpTransport, Chain, PrivateKeyAccount>>();
@@ -174,5 +175,6 @@ export const useBurnerWallet = (): TBurnerSigner => {
     account,
     generateNewBurner,
     saveBurner,
+    burnerSk,
   };
 };
