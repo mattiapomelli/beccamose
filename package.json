@@ -26,6 +26,7 @@
     "next:lint": "yarn workspace @beccamose/nextjs lint",
     "next:format": "yarn workspace @beccamose/nextjs format",
     "next:check-types": "yarn workspace @beccamose/nextjs check-types",
+    "next:build": "yarn workspace @beccamose/nextjs build",
     "sdk:build": "yarn workspace @beccamose/sdk build",
     "postinstall": "husky install",
     "precommit": "lint-staged",
