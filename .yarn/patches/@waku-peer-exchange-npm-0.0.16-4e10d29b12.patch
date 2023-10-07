@@ -1,8 +1,8 @@
 diff --git a/dist/waku_peer_exchange_discovery.js b/dist/waku_peer_exchange_discovery.js
-index 0109d482db4e0f87198ef85cf3b09aba54dc062e..8be03907a377a89b0e8acf99d8602cb0213a94e3 100644
+index 0109d482db4e0f87198ef85cf3b09aba54dc062e..ee16b5db951e2a49bbe4687d0bc1e070baa481d4 100644
 --- a/dist/waku_peer_exchange_discovery.js
 +++ b/dist/waku_peer_exchange_discovery.js
-@@ -78,14 +78,21 @@ export class PeerExchangeDiscovery extends EventEmitter {
+@@ -78,14 +78,22 @@ export class PeerExchangeDiscovery extends EventEmitter {
          }, queryInterval * currentAttempt);
      };
      async query(peerId) {
@@ -10,8 +10,9 @@ index 0109d482db4e0f87198ef85cf3b09aba54dc062e..8be03907a377a89b0e8acf99d8602cb0
 -            numPeers: DEFAULT_PEER_EXCHANGE_REQUEST_NODES,
 -            peerId
 -        });
++        let peerInfos;
 +        try {
-+            const peerInfos = await this.peerExchange.query({
++            peerInfos = await this.peerExchange.query({
 +                numPeers: DEFAULT_PEER_EXCHANGE_REQUEST_NODES,
 +                peerId
 +            });

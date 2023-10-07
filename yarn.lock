@@ -6185,7 +6185,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@waku/peer-exchange@npm:^0.0.16":
+"@waku/peer-exchange@npm:0.0.16":
   version: 0.0.16
   resolution: "@waku/peer-exchange@npm:0.0.16"
   dependencies:
@@ -6200,6 +6200,24 @@ __metadata:
     it-length-prefixed: ^9.0.1
     it-pipe: ^3.0.1
   checksum: bb615802b1fbd9613cdb02a837e12cc63c9d1c9520e0873b6ce0a3093077938638179322ee6d6aac586786107951efd54728912237edd2a64fc827d7e0bf6ac4
+  languageName: node
+  linkType: hard
+
+"@waku/peer-exchange@patch:@waku/peer-exchange@npm%3A0.0.16#./.yarn/patches/@waku-peer-exchange-npm-0.0.16-4e10d29b12.patch::locator=beccamose%40workspace%3A.":
+  version: 0.0.16
+  resolution: "@waku/peer-exchange@patch:@waku/peer-exchange@npm%3A0.0.16#./.yarn/patches/@waku-peer-exchange-npm-0.0.16-4e10d29b12.patch::version=0.0.16&hash=dda974&locator=beccamose%40workspace%3A."
+  dependencies:
+    "@libp2p/interfaces": ^3.3.2
+    "@waku/core": 0.0.23
+    "@waku/enr": 0.0.17
+    "@waku/interfaces": 0.0.18
+    "@waku/proto": 0.0.5
+    "@waku/utils": 0.0.11
+    debug: ^4.3.4
+    it-all: ^3.0.3
+    it-length-prefixed: ^9.0.1
+    it-pipe: ^3.0.1
+  checksum: e574d383ea809d8971a608e5a76f385c18e16f2d2eeb67216829ab620a7b988ee7093fc31b8fcd834250d9f8e89d4bdb35fbb9da8f9e03720d62e7c4fca5d7ad
   languageName: node
   linkType: hard
 
