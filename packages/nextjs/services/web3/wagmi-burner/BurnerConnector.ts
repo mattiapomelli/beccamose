@@ -41,7 +41,7 @@ export class BurnerConnector extends Connector<StaticJsonRpcProvider, BurnerConn
   async getWalletClient(config?: { chainId?: number | undefined } | undefined) {
     const chain = this.getChainFromId(config?.chainId);
     if (!this.burnerWallet) {
-      const bunerAccount = privateKeyToAccount(loadBurnerSK());
+      const bunerAccount = privateKeyToAccount(loadBurnerSK().sk);
 
       const client = createWalletClient({
         chain: chain,
@@ -93,7 +93,7 @@ export class BurnerConnector extends Connector<StaticJsonRpcProvider, BurnerConn
   }
 
   async getAccount(): Promise<`0x${string}`> {
-    const bunerAccount = privateKeyToAccount(loadBurnerSK());
+    const bunerAccount = privateKeyToAccount(loadBurnerSK().sk);
     return bunerAccount.address as `0x${string}`;
   }
 
@@ -119,7 +119,7 @@ export class BurnerConnector extends Connector<StaticJsonRpcProvider, BurnerConn
   protected async onAccountsChanged() {
     const chainId = await this.getChainId();
     const chain = this.getChainFromId(chainId);
-    const bunerAccount = privateKeyToAccount(loadBurnerSK());
+    const bunerAccount = privateKeyToAccount(loadBurnerSK().sk);
 
     const client = createWalletClient({
       chain: chain,
@@ -131,7 +131,7 @@ export class BurnerConnector extends Connector<StaticJsonRpcProvider, BurnerConn
   protected async onChainChanged() {
     const chainId = await this.getChainId();
     const chain = this.getChainFromId(chainId);
-    const bunerAccount = privateKeyToAccount(loadBurnerSK());
+    const bunerAccount = privateKeyToAccount(loadBurnerSK().sk);
 
     const client = createWalletClient({
       chain: chain,

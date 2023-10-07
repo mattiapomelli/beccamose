@@ -4,10 +4,10 @@ import { recoverPublicKey } from "viem";
 import { useBurnerWallet } from "~~/hooks/scaffold-eth";
 
 export const useDecrypt = () => {
-  const { burnerSk } = useBurnerWallet();
+  const { privateKey } = useBurnerWallet();
 
   const decryptMessage = async (encryptedMessage: any) => {
-    const decryptedMessage = await EthCrypto.decryptWithPrivateKey(burnerSk, encryptedMessage);
+    const decryptedMessage = await EthCrypto.decryptWithPrivateKey(privateKey, encryptedMessage);
     return decryptedMessage;
   };
 
