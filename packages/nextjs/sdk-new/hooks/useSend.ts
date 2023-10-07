@@ -22,6 +22,8 @@ export const useSend = () => {
     const serialisedMessage = chatMessage.encode(protoMessage).finish();
 
     try {
+      console.log("Sending message");
+
       // Send the message using Light Push
       const res = await node.lightPush.send(encoder, {
         payload: serialisedMessage,
