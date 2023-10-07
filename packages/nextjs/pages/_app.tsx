@@ -45,7 +45,10 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={apolloClient}>
       <WagmiConfig config={wagmiConfig}>
-        <LightNodeProvider options={{ defaultBootstrap: true }} protocols={[Protocols.Filter, Protocols.LightPush]}>
+        <LightNodeProvider
+          options={{ defaultBootstrap: true }}
+          protocols={[Protocols.Filter, Protocols.LightPush, Protocols.Store]}
+        >
           <ContentPairProvider contentTopic={CONTENT_TOPIC}>
             <NextNProgress />
             <RainbowKitProvider

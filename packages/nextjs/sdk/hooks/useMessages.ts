@@ -1,4 +1,4 @@
-import { ILocationMessage, LocationMessage } from "../constants";
+import { decodeMessages } from "../utils";
 import { LightNode } from "@waku/interfaces";
 import { useContentPair, useFilterMessages, useWaku } from "@waku/react";
 
@@ -6,7 +6,7 @@ export const useMessages = () => {
   const { node } = useWaku<LightNode>();
   const { decoder } = useContentPair();
 
-  const { messages: decodedMessages, ...rest } = useFilterMessages({
+  const { messages, ...rest } = useFilterMessages({
     node,
     decoder,
     // @ts-ignore
@@ -22,17 +22,11 @@ export const useMessages = () => {
 
   // console.log("Decoded messages: ", decodedMessages);
 
-  const messages = decodedMessages.map(message => {
-    const json = LocationMessage.decode(message.payload).toJSON();
-    return {
-      ...json,
-      message: JSON.parse(json.message),
-    };
-  }) as ILocationMessage[];
+  const decodedMessages = decodeMessages(messages);
 
-  console.log("Messages: ", messages);
+  console.log("Messages: ", decodedMessages);
 
-  const filteredMessages = messages.filter(message => node?.libp2p.peerId.toString() !== message.sender);
+  const filteredMessages = decodedMessages.filter(message => node?.libp2p.peerId.toString() !== message.sender);
 
   console.log("Other messages: ", filteredMessages);
 

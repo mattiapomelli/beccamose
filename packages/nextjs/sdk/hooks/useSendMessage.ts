@@ -19,7 +19,7 @@ export const useSendMessage = () => {
     // Create a new message object
     const protoMessage = LocationMessage.create({
       timestamp: Date.now(),
-      sender: node?.libp2p.peerId.toString(),
+      sender: node?.libp2p.peerId.toString(), // TODO: move sender inside the encrypted message
       message,
       nonce: Math.floor(Math.random() * 1000000000000),
     });
