@@ -51,7 +51,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
           <DerivedAccountProvider>
             <div className="flex flex-col min-h-screen">
               <Header />
-              <main className="relative flex flex-col items-center justify-center flex-1">
+              <main className="relative flex flex-col items-center justify-start flex-1 py-4">
                 <Component {...pageProps} />
               </main>
             </div>
