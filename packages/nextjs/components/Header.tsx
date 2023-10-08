@@ -4,14 +4,14 @@ import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 export const Header = () => {
   return (
-    <div className="sticky top-0 left-0 bg-base-100 py-4 justify-between z-20">
-      <div className="w-full flex items-center justify-between">
+    <header className="sticky top-0 left-0 bg-base-100 py-4 justify-between z-20">
+      <div className="w-full flex items-center justify-between layout-container">
         <Link href="/">Beccamose</Link>
         <div className="flex items-center gap-x-2">
           <RainbowKitCustomConnectButton />
           <SwitchTheme />
         </div>
       </div>
-    </div>
+    </header>
   );
 };
