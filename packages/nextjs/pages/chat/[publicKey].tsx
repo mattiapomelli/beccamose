@@ -1,8 +1,10 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import { publicKeyToAddress } from "viem/accounts";
 import { useAccount } from "wagmi";
+import { Button } from "~~/components/ui/Button";
 import { useHasMounted } from "~~/hooks/useHasMounted";
 import { useReceive } from "~~/sdk-new/hooks/useReceive";
 import { useSendLocation } from "~~/sdk-new/hooks/useSendLocation";
@@ -25,25 +27,24 @@ const InvitePage: NextPage = () => {
   });
   const { coords: otherCoords } = useReceive();
 
-  const mintNFT = () => {
-    fetch("/api/mint", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        address: address,
-        address1: address,
-        address2: publicKeyToAddress(publicKey),
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log("NFT MINTED", data);
-      })
-      .catch(error => {
-        console.error("Error:", error);
+  const { mutateAsync: mintNFT, isLoading } = useMutation({
+    mutationFn: async () => {
+      return fetch("/api/mint", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address: address,
+          address1: address,
+          address2: publicKeyToAddress(publicKey),
+        }),
       });
+    },
+  });
+
+  const onMint = async () => {
+    await mintNFT();
   };
 
   if (!hasMounted) {
@@ -57,9 +58,9 @@ const InvitePage: NextPage = () => {
         position2={[otherCoords?.latitude || 0, otherCoords?.longitude || 0]}
       />
 
-      <button className="btn btn-primary min-w-[15rem]" onClick={mintNFT}>
+      <Button onClick={() => onMint()} disabled={isLoading} loading={isLoading}>
         Mint POM NFT
-      </button>
+      </Button>
 
       <div className="bg-warning rounded-md p-4 w-full">
         <div className="break-words">Public key: {derivedAccount?.account.publicKey}</div>

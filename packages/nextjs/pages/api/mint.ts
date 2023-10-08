@@ -27,7 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const wallet = ethers.Wallet.fromMnemonic(mnemonic);
 
   // Connect to local network hardhat
-  const provider = new ethers.providers.JsonRpcProvider("http://localhost:8545"); // TODO: Replace with Base
+  // const provider = new ethers.providers.JsonRpcProvider("http://localhost:8545"); // TODO: Replace with Base
+  const provider = new ethers.providers.JsonRpcProvider(scaffoldConfig.targetNetwork.rpcUrls.default.http[0]); // TODO: Replace with Base
 
   const signer = wallet.connect(provider);
   const contract = new ethers.Contract(deployedBeccamoseContract.address, deployedBeccamoseContract.abi, signer);

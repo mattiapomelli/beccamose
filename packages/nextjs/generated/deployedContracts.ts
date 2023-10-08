@@ -1,7 +1,7 @@
 const contracts = {
-  31337: [
+  84531: [
     {
-      chainId: "31337",
+      chainId: "84531",
       name: "localhost",
       contracts: {
         Beccamose: {
