@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useHasMounted } from "~~/hooks/useHasMounted";
 import { useReceive } from "~~/sdk-new/hooks/useReceive";
@@ -6,11 +7,14 @@ import { useSendLocation } from "~~/sdk-new/hooks/useSendLocation";
 import { useDerivedAccount } from "~~/sdk/crypto";
 
 const InvitePage: NextPage = () => {
+  const router = useRouter();
+  const publicKey = router.query.publicKey?.toString() as `0x${string}`;
+
   const hasMounted = useHasMounted();
   const { derivedAccount } = useDerivedAccount();
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useSendLocation({
-    publicKey: "0x",
+    publicKey,
   });
   useReceive();
 

@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { useSend } from "./useSend";
 import { useGeolocated } from "react-geolocated";
 import { useAccount } from "wagmi";
+import { generateEncryptionClient } from "~~/sdk/crypto";
 
-export const useSendLocation = () => {
+interface UseSendLocationParams {
+  publicKey: `0x${string}`;
+}
+
+export const useSendLocation = ({ publicKey }: UseSendLocationParams) => {
   const { address } = useAccount();
   const [counter, setCounter] = useState(0);
 
@@ -19,10 +24,18 @@ export const useSendLocation = () => {
   });
 
   useEffect(() => {
-    const callback = () => {
+    if (!address) return;
+
+    const callback = async () => {
       const message = `${coords?.latitude} - ${coords?.longitude} - ${counter} - ${address}`;
 
-      send(message);
+      // Encrypt message
+      const encryptionClient = generateEncryptionClient(publicKey);
+
+      const encryptedMessage = await encryptionClient.encryptMessage(JSON.stringify(message));
+      const stringifiedEncryptedMessage = JSON.stringify(encryptedMessage);
+
+      send({ message: stringifiedEncryptedMessage, sender: address });
       setCounter(counter => counter + 1);
     };
 
@@ -31,7 +44,7 @@ export const useSendLocation = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [send, counter, coords?.latitude, coords?.longitude]);
+  }, [send, counter, coords?.latitude, coords?.longitude, address, publicKey]);
 
   return {
     coords,

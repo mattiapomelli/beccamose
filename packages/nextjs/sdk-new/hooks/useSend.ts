@@ -5,7 +5,7 @@ import { createEncoder } from "@waku/sdk";
 export const useSend = () => {
   const { data: node } = useNode();
 
-  const send = async (message: string) => {
+  const send = async ({ message, sender }: { message: string; sender: string }) => {
     if (!node) return;
 
     // Create a message encoder
@@ -14,7 +14,7 @@ export const useSend = () => {
     // Create a new message object
     const protoMessage = locationMessage.create({
       timestamp: Date.now(),
-      sender: "Alice",
+      sender,
       message,
     });
 
