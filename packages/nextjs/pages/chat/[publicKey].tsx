@@ -22,6 +22,27 @@ const InvitePage: NextPage = () => {
   });
   const { coords: otherCoords } = useReceive();
 
+  const mintNFT = () => {
+    fetch("/api/mint", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        address: "qwerty",
+        address1: "qwerty",
+        address2: "DIO CANE",
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("NFT MINTED", data);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  };
+
   if (!hasMounted) {
     return null;
   }
@@ -32,6 +53,10 @@ const InvitePage: NextPage = () => {
         position1={[coords?.latitude || 0, coords?.longitude || 0]}
         position2={[otherCoords?.latitude || 0, otherCoords?.longitude || 0]}
       />
+
+      <button className="btn btn-primary min-w-[15rem]" onClick={mintNFT}>
+        Mint POM NFT
+      </button>
 
       <div className="bg-warning rounded-md p-4 w-full">
         <div className="break-words">Public key: {derivedAccount?.account.publicKey}</div>
