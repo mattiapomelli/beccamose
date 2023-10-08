@@ -24,7 +24,7 @@ const InvitePage: NextPage = () => {
     <div>
       <MetaHeader title="Beccamose | Invite" />
 
-      <section className="flex flex-col gap-y-4 items-center justify-center w-full flex-1">
+      <section className="flex flex-col gap-y-4 items-center justify-center w-full flex-1 py-10">
         <Link href={"/"}>
           <Button className="whitespace-nowrap" variant={"outline"} leftIcon={<ArrowLeftIcon className="w-5 h-5" />}>
             Back

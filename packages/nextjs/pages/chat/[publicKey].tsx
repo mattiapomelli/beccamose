@@ -98,7 +98,7 @@ const InvitePage: NextPage = () => {
         </Button>
       )}
 
-      <div className="bg-warning rounded-md p-4 w-full">
+      <div className="bg-warning text-primary-content rounded-md p-4 w-full">
         <div className="break-words">Public key: {derivedAccount?.account.publicKey}</div>
         <div className="break-words">Private key: {derivedAccount?.privateKey}</div>
         <div className="break-words">isGeolocationAvailable: {isGeolocationAvailable.toString()}</div>
