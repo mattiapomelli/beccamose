@@ -24,13 +24,11 @@ const InvitePage: NextPage = () => {
       <section className="flex flex-col gap-y-4 items-center justify-center w-full flex-1">
         <div className="flex flex-col gap-y-2 items-center justify-center">
           <h2>Scan the QR Code</h2>
-          {/* ToDo --> Fix link */}
-          <QrCode address="https://www.google.it/" />
+          <QrCode address={`${window.location.origin}/invite/${derivedAccount?.account.publicKey}`} />
         </div>
         <div className="flex flex-col gap-y-2 items-center justify-center w-full">
           <h2>Use the invitation link</h2>
-          <p className="bg-base-100 rounded-btn p-4 w-full text-center border-2 border-base-300">
-            {/* ToDo --> Fix link */}
+          <p className="bg-base-100 rounded-btn p-4 w-full text-center border-2 border-base-300 break-words">
             {window.location.origin}/invite/{derivedAccount?.account.publicKey}
           </p>
           <CopyButton
@@ -49,8 +47,8 @@ const InvitePage: NextPage = () => {
 
       <div className="bg-warning rounded-md p-4 mt-10">
         <h3 className="font-bold">Debug Zone</h3>
-        <div>Public key: {derivedAccount?.account.publicKey}</div>
-        <div>Private key: {derivedAccount?.privateKey}</div>
+        <div className="break-words">Public key: {derivedAccount?.account.publicKey}</div>
+        <div className="break-words">Private key: {derivedAccount?.privateKey}</div>
       </div>
     </div>
   );
