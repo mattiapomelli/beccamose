@@ -26,7 +26,7 @@ const ChatsPage: NextPage = () => {
 
       <section className="flex flex-col gap-y-4 items-center justify-center w-full">
         <div className="flex flex-col gap-y-2 items-center justify-center w-full">
-          <h1 className="w-full text-left font-semibold text-base mb-2">Active Chats</h1>
+          <h1 className="w-full text-center font-semibold text-base mb-2">Active Chats</h1>
           {chats?.map(chat => {
             return (
               <Link
