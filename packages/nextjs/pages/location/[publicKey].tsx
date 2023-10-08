@@ -16,7 +16,7 @@ const InvitePage: NextPage = () => {
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useSendLocation({
     publicKey,
   });
-  useReceive();
+  const { coords: otherCoords } = useReceive();
 
   if (!hasMounted) {
     return null;
@@ -25,12 +25,14 @@ const InvitePage: NextPage = () => {
   return (
     <div>
       <div>Send</div>
+      <div>Public key: {derivedAccount?.account.publicKey}</div>
+      <div>Private key: {derivedAccount?.privateKey}</div>
       <div>isGeolocationAvailable: {isGeolocationAvailable.toString()}</div>
       <div>isGeolocationEnabled: {isGeolocationEnabled.toString()}</div>
       <div>Latitude: {coords?.latitude}</div>
       <div>Longitude: {coords?.longitude}</div>
-      <div>Public key: {derivedAccount?.account.publicKey}</div>
-      <div>Private key: {derivedAccount?.privateKey}</div>
+      <div>Other Latitude: {otherCoords?.latitude}</div>
+      <div>Other Longitude: {otherCoords?.longitude}</div>
     </div>
   );
 };

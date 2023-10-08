@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CONTENT_TOPIC, locationMessage } from "../constants";
 import { useNode } from "./useNode";
 import { DecodedMessage, createDecoder } from "@waku/sdk";
@@ -7,6 +7,8 @@ import { useDerivedAccountEncryption } from "~~/sdk/crypto";
 export const useReceive = () => {
   const { data: node } = useNode();
   const { decryptMessage } = useDerivedAccountEncryption();
+
+  const [coords, setCoords] = useState({ latitude: 0, longitude: 0 });
 
   useEffect(() => {
     if (!node) return;
@@ -23,6 +25,11 @@ export const useReceive = () => {
       const parsedDecryptedMessageField = JSON.parse(decryptedMessageField);
 
       console.log("Decrypted message field: ", parsedDecryptedMessageField);
+
+      setCoords({
+        latitude: parsedDecryptedMessageField.latitude,
+        longitude: parsedDecryptedMessageField.longitude,
+      });
     };
 
     let unsubscribe: any;
@@ -41,4 +48,8 @@ export const useReceive = () => {
       unsubscribe?.();
     };
   }, [node, decryptMessage]);
+
+  return {
+    coords,
+  };
 };
