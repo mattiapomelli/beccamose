@@ -48,6 +48,7 @@
   },
   "resolutions": {
     "usehooks-ts@^2.7.2": "patch:usehooks-ts@npm:^2.7.2#./.yarn/patches/usehooks-ts-npm-2.7.2-fceffe0e43.patch",
-    "@waku/peer-exchange@^0.0.16": "patch:@waku/peer-exchange@npm%3A0.0.16#./.yarn/patches/@waku-peer-exchange-npm-0.0.16-4e10d29b12.patch"
+    "@waku/peer-exchange@^0.0.16": "patch:@waku/peer-exchange@npm%3A0.0.16#./.yarn/patches/@waku-peer-exchange-npm-0.0.16-4e10d29b12.patch",
+    "eccrypto@1.1.6": "patch:eccrypto@npm%3A1.1.6#./.yarn/patches/eccrypto-npm-1.1.6-2285b3e8b1.patch"
   }
 }

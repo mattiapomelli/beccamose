@@ -61,9 +61,16 @@ export const useChats = () => {
         }
       });
 
-      const decryptedMessages = (await Promise.all(decryptedPromises).then(results =>
-        results.filter(result => result !== null),
-      )) as ILocationMessage[];
+      const decryptedMessagesSettlement = await Promise.allSettled(decryptedPromises);
+      const decryptedMessages = decryptedMessagesSettlement
+        .map(result => {
+          if (result.status === "fulfilled") {
+            return result.value;
+          } else {
+            return null;
+          }
+        })
+        .filter(result => result !== null) as ILocationMessage[];
 
       console.log(`--- Failed ${failed} decryptions out of ${lastMessages.length} messages`);
       console.log("--- Decrypted chat messages:", decryptedMessages);

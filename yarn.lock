@@ -7518,6 +7518,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eccrypto@patch:eccrypto@npm%3A1.1.6#./.yarn/patches/eccrypto-npm-1.1.6-2285b3e8b1.patch::locator=beccamose%40workspace%3A.":
+  version: 1.1.6
+  resolution: "eccrypto@patch:eccrypto@npm%3A1.1.6#./.yarn/patches/eccrypto-npm-1.1.6-2285b3e8b1.patch::version=1.1.6&hash=97ce09&locator=beccamose%40workspace%3A."
+  dependencies:
+    acorn: 7.1.1
+    elliptic: 6.5.4
+    es6-promise: 4.2.8
+    nan: 2.14.0
+    node-gyp: latest
+    secp256k1: 3.7.1
+  dependenciesMeta:
+    secp256k1:
+      optional: true
+  checksum: b4ffdc34e5bc5f829ff73db184d17dcfe16857a7b4e0bb8b697359c8783377f4783396e8fdd37c70464cd0af45a2206341324c83c1c0d7e049aad3636dbdfa88
+  languageName: node
+  linkType: hard
+
 "edge-runtime@npm:2.5.1":
   version: 2.5.1
   resolution: "edge-runtime@npm:2.5.1"
