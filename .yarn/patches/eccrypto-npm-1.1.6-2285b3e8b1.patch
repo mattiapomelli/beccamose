@@ -1,0 +1,73 @@
+diff --git a/browser.js b/browser.js
+index c9847dfe234746d5938470116ef8aa6350209017..f80c614f4ece7003d5b486e88449791c344ee4c0 100644
+--- a/browser.js
++++ b/browser.js
+@@ -185,24 +185,28 @@ exports.verify = function(publicKey, msg, sig) {
+ };
+ 
+ var derive = exports.derive = function(privateKeyA, publicKeyB) {
+-  return new Promise(function(resolve) {
+-    assert(Buffer.isBuffer(privateKeyA), "Bad private key");
+-    assert(Buffer.isBuffer(publicKeyB), "Bad public key");
+-    assert(privateKeyA.length === 32, "Bad private key");
+-    assert(isValidPrivateKey(privateKeyA), "Bad private key");
+-    assert(publicKeyB.length === 65 || publicKeyB.length === 33, "Bad public key");
+-    if (publicKeyB.length === 65)
+-    {
+-      assert(publicKeyB[0] === 4, "Bad public key");
+-    }
+-    if (publicKeyB.length === 33)
+-    {
+-      assert(publicKeyB[0] === 2 || publicKeyB[0] === 3, "Bad public key");
++  return new Promise(function(resolve, reject) {
++    try {
++      assert(Buffer.isBuffer(privateKeyA), "Bad private key");
++      assert(Buffer.isBuffer(publicKeyB), "Bad public key");
++      assert(privateKeyA.length === 32, "Bad private key");
++      assert(isValidPrivateKey(privateKeyA), "Bad private key");
++      assert(publicKeyB.length === 65 || publicKeyB.length === 33, "Bad public key");
++      if (publicKeyB.length === 65)
++      {
++        assert(publicKeyB[0] === 4, "Bad public key");
++      }
++      if (publicKeyB.length === 33)
++      {
++        assert(publicKeyB[0] === 2 || publicKeyB[0] === 3, "Bad public key");
++      }
++      var keyA = ec.keyFromPrivate(privateKeyA);
++      var keyB = ec.keyFromPublic(publicKeyB);
++      var Px = keyA.derive(keyB.getPublic());  // BN instance
++      resolve(Buffer.from(Px.toArray()));
++    } catch (e) {
++      reject(e);
+     }
+-    var keyA = ec.keyFromPrivate(privateKeyA);
+-    var keyB = ec.keyFromPublic(publicKeyB);
+-    var Px = keyA.derive(keyB.getPublic());  // BN instance
+-    resolve(Buffer.from(Px.toArray()));
+   });
+ };
+ 
+diff --git a/index.js b/index.js
+index a63218b73bb5cb1d566962fac9360689341fcae0..e804e8f593e6e9ddb3dd90c892d9fad5497d35fa 100644
+--- a/index.js
++++ b/index.js
+@@ -176,10 +176,14 @@ exports.verify = function(publicKey, msg, sig) {
+  * shared secret (Px, 32 bytes) and rejects on bad key.
+  */
+ var derive = exports.derive = function(privateKeyA, publicKeyB) {
+-  return new promise(function(resolve) {
+-    assert(privateKeyA.length === 32, "Bad private key");
+-    assert(isValidPrivateKey(privateKeyA), "Bad private key");
+-    resolve(ecdh.derive(privateKeyA, publicKeyB));
++  return new promise(function(resolve, reject) {
++    try {
++      assert(privateKeyA.length === 32, "Bad private key");
++      assert(isValidPrivateKey(privateKeyA), "Bad private key");
++      resolve(ecdh.derive(privateKeyA, publicKeyB));
++    } catch (e) {
++      reject(e);
++    }
+   });
+ };
+ 

@@ -12,7 +12,9 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="relative flex flex-col flex-1">{children}</main>
+      <main className="relative flex flex-col flex-1">
+        <div className="layout-container py-8">{children}</div>
+      </main>
     </div>
   );
 };
