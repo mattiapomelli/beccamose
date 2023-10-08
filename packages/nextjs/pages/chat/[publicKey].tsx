@@ -27,20 +27,21 @@ const InvitePage: NextPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-y-4 justify-center items-center">
       <Map
         position1={[coords?.latitude || 0, coords?.longitude || 0]}
         position2={[otherCoords?.latitude || 0, otherCoords?.longitude || 0]}
       />
-      <div className="bg-warning rounded-md p-4">
-        <div>Public key: {derivedAccount?.account.publicKey}</div>
-        <div>Private key: {derivedAccount?.privateKey}</div>
-        <div>isGeolocationAvailable: {isGeolocationAvailable.toString()}</div>
-        <div>isGeolocationEnabled: {isGeolocationEnabled.toString()}</div>
-        <div>Latitude: {coords?.latitude}</div>
-        <div>Longitude: {coords?.longitude}</div>
-        <div>Other Latitude: {otherCoords?.latitude}</div>
-        <div>Other Longitude: {otherCoords?.longitude}</div>
+
+      <div className="bg-warning rounded-md p-4 w-full">
+        <div className="break-words">Public key: {derivedAccount?.account.publicKey}</div>
+        <div className="break-words">Private key: {derivedAccount?.privateKey}</div>
+        <div className="break-words">isGeolocationAvailable: {isGeolocationAvailable.toString()}</div>
+        <div className="break-words">isGeolocationEnabled: {isGeolocationEnabled.toString()}</div>
+        <div className="break-words">Latitude: {coords?.latitude}</div>
+        <div className="break-words">Longitude: {coords?.longitude}</div>
+        <div className="break-words">Other Latitude: {otherCoords?.latitude}</div>
+        <div className="break-words">Other Longitude: {otherCoords?.longitude}</div>
       </div>
     </div>
   );
