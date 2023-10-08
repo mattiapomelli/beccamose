@@ -8,7 +8,8 @@ import { Button } from "~~/components/ui/Button";
 import { useHasMounted } from "~~/hooks/useHasMounted";
 import { useReceive } from "~~/sdk-new/hooks/useReceive";
 import { useSendLocation } from "~~/sdk-new/hooks/useSendLocation";
-import { useDerivedAccount } from "~~/sdk/crypto";
+
+// import { useDerivedAccount } from "~~/sdk/crypto";
 
 const Map = dynamic(() => import("../../components/my-map/my-map"), {
   ssr: false,
@@ -46,7 +47,7 @@ const InvitePage: NextPage = () => {
   const publicKey = router.query.publicKey?.toString() as `0x${string}`;
 
   const hasMounted = useHasMounted();
-  const { derivedAccount } = useDerivedAccount();
+  // const { derivedAccount } = useDerivedAccount();
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useSendLocation({
     publicKey,
@@ -99,14 +100,34 @@ const InvitePage: NextPage = () => {
       )}
 
       <div className="bg-warning text-primary-content rounded-md p-4 w-full">
-        <div className="break-words">Public key: {derivedAccount?.account.publicKey}</div>
-        <div className="break-words">Private key: {derivedAccount?.privateKey}</div>
-        <div className="break-words">isGeolocationAvailable: {isGeolocationAvailable.toString()}</div>
-        <div className="break-words">isGeolocationEnabled: {isGeolocationEnabled.toString()}</div>
-        <div className="break-words">Latitude: {coords?.latitude}</div>
-        <div className="break-words">Longitude: {coords?.longitude}</div>
-        <div className="break-words">Other Latitude: {otherCoords?.latitude}</div>
-        <div className="break-words">Other Longitude: {otherCoords?.longitude}</div>
+        {/* <div className="break-words">
+          <span className="font-bold">Public key:</span> {derivedAccount?.account.publicKey}
+        </div> */}
+        {/* <div className="break-words">
+          <span className="font-bold">Private key:</span> {derivedAccount?.privateKey}
+        </div> */}
+        <div className="break-words">
+          <span className="font-bold">isGeolocationAvailable: </span>
+          {isGeolocationAvailable.toString()}
+        </div>
+        <div className="break-words">
+          <span className="font-bold">isGeolocationEnabled: </span>
+          {isGeolocationEnabled.toString()}
+        </div>
+        <div className="break-words">
+          <span className="font-bold">Your Latitude: </span>
+          {coords?.latitude}
+        </div>
+        <div className="break-words">
+          <span className="font-bold">Your Longitude: </span>
+          {coords?.longitude}
+        </div>
+        <div className="break-words">
+          <span className="font-bold">Peer Latitude:</span> {otherCoords?.latitude}
+        </div>
+        <div className="break-words">
+          <span className="font-bold">Peer Longitude:</span> {otherCoords?.longitude}
+        </div>
       </div>
     </div>
   );

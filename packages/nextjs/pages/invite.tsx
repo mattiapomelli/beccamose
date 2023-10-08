@@ -26,7 +26,12 @@ const InvitePage: NextPage = () => {
 
       <section className="flex flex-col gap-y-4 items-center justify-center w-full flex-1 py-10">
         <Link href={"/"}>
-          <Button className="whitespace-nowrap" variant={"outline"} leftIcon={<ArrowLeftIcon className="w-5 h-5" />}>
+          <Button
+            className="whitespace-nowrap"
+            color={"secondary"}
+            // variant={"outline"}
+            leftIcon={<ArrowLeftIcon className="w-5 h-5" />}
+          >
             Back
           </Button>
         </Link>

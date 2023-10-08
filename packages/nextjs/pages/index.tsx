@@ -15,13 +15,13 @@ const ChatsPage: NextPage = () => {
 
       <section>
         <div className="flex justify-between gap-4 items-center">
-          <h1 className="w-full font-bold text-lg">Active Location Sharings</h1>
+          <h1 className="w-full font-bold text-lg text-base-content">Active Location Sharings</h1>
           <Link href={"/invite"}>
             <Button className="whitespace-nowrap">New Sharing</Button>
           </Link>
         </div>
         {(!chats || chats?.length === 0) && (
-          <div className="flex justify-center py-20">
+          <div className="flex justify-center py-20 text-base-content">
             <p>You have no active location sharings.</p>
           </div>
         )}

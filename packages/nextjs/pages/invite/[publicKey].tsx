@@ -34,12 +34,12 @@ const InvitePage: NextPage = () => {
   // Connected user has been invited
   return (
     <section className="flex flex-col gap-y-4 items-center justify-center w-full">
-      <h1 className="w-full text-center font-semibold text-base mb-2">Start to share your location</h1>
+      <h1 className="w-full text-center font-bold text-xl mb-2">Start to share your location</h1>
       <div className="flex flex-col gap-y-4 items-center justify-center w-full">
         <Link href={`/chat/${inviterPublicKey}`}>
           <button className="btn btn-primary min-w-[15rem]">Start</button>
         </Link>
-        <Link href="/chats">
+        <Link href="/">
           <button className="btn btn-secondary min-w-[15rem]">Decline</button>
         </Link>
       </div>
