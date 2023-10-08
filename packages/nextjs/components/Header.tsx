@@ -9,7 +9,7 @@ export const Header = () => {
     <header className="sticky top-0 left-0 bg-base-100 py-4 justify-between z-20">
       <div className="w-full flex items-center justify-between layout-container">
         <Link href="/">
-          <Image src={BeccamoseLogo} alt="Beccamose logo" width={110} />
+          <Image src={BeccamoseLogo} alt="Beccamose logo" width={110} className="logo-drop-shadow" />
         </Link>
         <div className="flex items-center gap-x-2">
           <RainbowKitCustomConnectButton />

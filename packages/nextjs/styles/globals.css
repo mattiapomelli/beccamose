@@ -51,4 +51,8 @@ html[data-theme="scaffoldEthDark"]::view-transition-old(root) {
   .layout-container {
     @apply px-3 md:px-4 mx-auto w-full max-w-5xl;
   }
+
+  html[data-theme="scaffoldEthDark"] .logo-drop-shadow {
+    filter: drop-shadow(1.5px 1.5px 0 white) drop-shadow(-1.5px -1.5px 0 white);
+  }
 }
