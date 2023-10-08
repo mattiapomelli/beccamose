@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
+import { publicKeyToAddress } from "viem/accounts";
+import { useAccount } from "wagmi";
 import { useHasMounted } from "~~/hooks/useHasMounted";
 import { useReceive } from "~~/sdk-new/hooks/useReceive";
 import { useSendLocation } from "~~/sdk-new/hooks/useSendLocation";
@@ -11,6 +13,7 @@ const Map = dynamic(() => import("../../components/my-map/my-map"), {
 });
 
 const InvitePage: NextPage = () => {
+  const { address } = useAccount();
   const router = useRouter();
   const publicKey = router.query.publicKey?.toString() as `0x${string}`;
 
@@ -29,9 +32,9 @@ const InvitePage: NextPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        address: "qwerty",
-        address1: "qwerty",
-        address2: "DIO CANE",
+        address: address,
+        address1: address,
+        address2: publicKeyToAddress(publicKey),
       }),
     })
       .then(response => response.json())
