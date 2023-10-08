@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { Button } from "~~/components/ui/Button";
-import { useStoredChats } from "~~/sdk-new/hooks/useStoredChats";
+import { useStoredChats } from "~~/sdk/hooks/useStoredChats";
 
 const ChatsPage: NextPage = () => {
   const { data: chats } = useStoredChats();

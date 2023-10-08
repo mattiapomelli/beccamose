@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSend } from "./useSend";
+import { useSendMessage } from "./useSendMessage";
 import { useGeolocated } from "react-geolocated";
 import { useAccount } from "wagmi";
 import { generateEncryptionClient, useDerivedAccount } from "~~/sdk/crypto";
@@ -13,7 +13,7 @@ export const useSendLocation = ({ publicKey }: UseSendLocationParams) => {
   const [counter, setCounter] = useState(0);
   const { derivedAccount } = useDerivedAccount();
 
-  const { send } = useSend();
+  const { send } = useSendMessage();
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: true,

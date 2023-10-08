@@ -6,8 +6,8 @@ import { publicKeyToAddress } from "viem/accounts";
 import { useAccount } from "wagmi";
 import { Button } from "~~/components/ui/Button";
 import { useHasMounted } from "~~/hooks/useHasMounted";
-import { useReceive } from "~~/sdk-new/hooks/useReceive";
-import { useSendLocation } from "~~/sdk-new/hooks/useSendLocation";
+import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
+import { useSendLocation } from "~~/sdk/hooks/useSendLocation";
 
 // import { useDerivedAccount } from "~~/sdk/crypto";
 
@@ -52,7 +52,7 @@ const InvitePage: NextPage = () => {
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useSendLocation({
     publicKey,
   });
-  const { coords: otherCoords } = useReceive();
+  const { coords: otherCoords } = useReceiveLocation();
 
   const { mutateAsync: mintNFT, isLoading } = useMutation({
     mutationFn: async () => {
