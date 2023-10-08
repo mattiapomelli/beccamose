@@ -84,7 +84,7 @@ const ChatPage: NextPage = () => {
   if (!hasMounted) return null;
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
+    <div className="w-full flex flex-col gap-y-4 justify-center items-center">
       <Map
         position1={[coords?.latitude || 0, coords?.longitude || 0]}
         position2={[otherCoords?.latitude || 0, otherCoords?.longitude || 0]}
