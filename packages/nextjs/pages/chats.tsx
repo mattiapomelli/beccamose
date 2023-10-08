@@ -2,26 +2,13 @@ import Link from "next/link";
 // import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { useChats } from "~~/sdk/hooks/useChats";
+import { useStoredChats } from "~~/sdk-new/hooks/useStoredChats";
 
 const ChatsPage: NextPage = () => {
-  const { chats } = useChats();
-  // const router = useRouter();
+  const { data: chats } = useStoredChats();
 
   return (
     <>
-      {/* <h1>Chats</h1>
-
-      <div>
-        {chats?.map(chat => (
-          <Link key={chat.senderPublicKey} href={`/chat/${chat.senderPublicKey}`}>
-            <div>
-              {chat.senderAddress} - {chat.timestamp}
-            </div>
-          </Link>
-        ))}
-      </div> */}
-
       <MetaHeader title="Beccamose | Chats" />
 
       <section className="flex flex-col gap-y-4 items-center justify-center w-full">
