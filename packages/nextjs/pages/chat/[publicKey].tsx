@@ -92,7 +92,7 @@ const InvitePage: NextPage = () => {
         position2={[otherCoords?.latitude || 0, otherCoords?.longitude || 0]}
       />
 
-      {(distanceBetweenPointsInMeters === 0 || distanceBetweenPointsInMeters <= 10) && (
+      {(distanceBetweenPointsInMeters === 0 || distanceBetweenPointsInMeters <= 100) && (
         <Button onClick={() => onMint()} disabled={isLoading} loading={isLoading}>
           Mint POM NFT
         </Button>
