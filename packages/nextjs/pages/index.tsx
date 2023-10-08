@@ -30,8 +30,7 @@ const ChatsPage: NextPage = () => {
               <Link key={chat.senderPublicKey} href={`/chat/${chat.senderPublicKey}`}>
                 <div className="bg-base-300 rounded-lg p-4 flex items-center gap-3">
                   <Blockies className="rounded-full" size={10} seed={chat.senderAddress} scale={3} />
-
-                  <span className="font-medium text-lg">{chat.senderAddress}</span>
+                  <div className="font-medium text-lg break-all">{chat.senderAddress}</div>
                 </div>
               </Link>
             );
