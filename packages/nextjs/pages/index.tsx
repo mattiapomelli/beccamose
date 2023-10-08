@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { NextPage } from "next";
+import Blockies from "react-blockies";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { Button } from "~~/components/ui/Button";
 import { useStoredChats } from "~~/sdk/hooks/useStoredChats";
@@ -25,17 +26,19 @@ const ChatsPage: NextPage = () => {
             <p>You have no active location sharings.</p>
           </div>
         )}
-        {chats?.map(chat => {
-          return (
-            <Link
-              key={chat.senderPublicKey}
-              href={`/chat/${chat.senderPublicKey}`}
-              className="bg-primary text-primary-content rounded-btn p-4 w-full text-left"
-            >
-              {chat.senderAddress}
-            </Link>
-          );
-        })}
+        <div className="mt-6">
+          {chats?.map(chat => {
+            return (
+              <Link key={chat.senderPublicKey} href={`/chat/${chat.senderPublicKey}`}>
+                <div className="bg-base-300 rounded-lg p-4 flex items-center gap-3">
+                  <Blockies className="rounded-full" size={10} seed={chat.senderAddress} scale={3} />
+
+                  <span className="font-medium text-lg">{chat.senderAddress}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </section>
     </>
   );
