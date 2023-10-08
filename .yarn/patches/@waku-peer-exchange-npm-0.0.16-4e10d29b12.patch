@@ -1,8 +1,33 @@
+diff --git a/bundle/index.js b/bundle/index.js
+index 252755e3a1937e751d2fb82869dce88e40090c22..e1c3be46feff38c5ed2d50b561fb864afcd62216 100644
+--- a/bundle/index.js
++++ b/bundle/index.js
+@@ -33187,10 +33187,16 @@ class PeerExchangeDiscovery extends EventEmitter {
+         }, queryInterval * currentAttempt);
+     };
+     async query(peerId) {
+-        const peerInfos = await this.peerExchange.query({
+-            numPeers: DEFAULT_PEER_EXCHANGE_REQUEST_NODES,
+-            peerId
+-        });
++        let peerInfos;
++        try {
++          peerInfos = await this.peerExchange.query({
++              numPeers: DEFAULT_PEER_EXCHANGE_REQUEST_NODES,
++              peerId
++          });
++        } catch(error) {
++          console.log(`bundle:Error querying peer: ${error}`);
++          return;
++        }
+         if (!peerInfos) {
+             log("Peer exchange query failed, no peer info returned");
+             return;
 diff --git a/dist/waku_peer_exchange_discovery.js b/dist/waku_peer_exchange_discovery.js
-index 0109d482db4e0f87198ef85cf3b09aba54dc062e..ee16b5db951e2a49bbe4687d0bc1e070baa481d4 100644
+index 0109d482db4e0f87198ef85cf3b09aba54dc062e..791f067a39de7f4dc9736534d843f2757823a904 100644
 --- a/dist/waku_peer_exchange_discovery.js
 +++ b/dist/waku_peer_exchange_discovery.js
-@@ -78,14 +78,22 @@ export class PeerExchangeDiscovery extends EventEmitter {
+@@ -78,10 +78,16 @@ export class PeerExchangeDiscovery extends EventEmitter {
          }, queryInterval * currentAttempt);
      };
      async query(peerId) {
@@ -17,15 +42,34 @@ index 0109d482db4e0f87198ef85cf3b09aba54dc062e..ee16b5db951e2a49bbe4687d0bc1e070
 +                peerId
 +            });
 +        } catch(error) {
-+            log(`Error querying peer: ${error}`);
++            console.log(`js:Peer exchange query failed: ${error}`);
 +            return;
 +        }
-+
          if (!peerInfos) {
              log("Peer exchange query failed, no peer info returned");
              return;
-         }
-+        
-         for (const _peerInfo of peerInfos) {
-             const { ENR } = _peerInfo;
-             if (!ENR) {
+diff --git a/src/waku_peer_exchange_discovery.ts b/src/waku_peer_exchange_discovery.ts
+index 14c19c45febff029ce8ce8c946c3eef5bb71255d..2b7a3402a34b83a28afc3072d7990be055a9439c 100644
+--- a/src/waku_peer_exchange_discovery.ts
++++ b/src/waku_peer_exchange_discovery.ts
+@@ -157,10 +157,16 @@ export class PeerExchangeDiscovery
+   };
+ 
+   private async query(peerId: PeerId): Promise<void> {
+-    const peerInfos = await this.peerExchange.query({
+-      numPeers: DEFAULT_PEER_EXCHANGE_REQUEST_NODES,
+-      peerId
+-    });
++    let peerInfos: PeerInfo[] | undefined;
++    try {
++      peerInfos = await this.peerExchange.query({
++        numPeers: DEFAULT_PEER_EXCHANGE_REQUEST_NODES,
++        peerId
++      });
++    } catch(error) {
++      console.log(`ts:Error querying peer: ${error}`);
++      return;
++    }
+ 
+     if (!peerInfos) {
+       log("Peer exchange query failed, no peer info returned");
