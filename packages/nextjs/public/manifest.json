@@ -1,0 +1,10 @@
+{
+  "short_name": "Beccamose",
+  "name": "Beccamose",
+  "description": "Wallet-to-wallet private location sharing",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#90f6ff"
+}
