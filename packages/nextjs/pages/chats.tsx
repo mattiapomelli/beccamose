@@ -32,7 +32,7 @@ const ChatsPage: NextPage = () => {
               <Link
                 key={chat.senderPublicKey}
                 href={`/chat/${chat.senderPublicKey}`}
-                className="bg-primary text-primary-content rounded-btn p-4 w-full text-left"
+                className="bg-primary text-primary-content rounded-btn break-words p-4 w-full text-left"
               >
                 {chat.senderAddress}
               </Link>
