@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { Spinner } from "~~/components/Spinner";
-import { Button } from "~~/components/ui/Button";
 import { CopyButton } from "~~/components/ui/CopyButton";
 
 const InvitePage: NextPage = () => {
@@ -34,17 +33,17 @@ const InvitePage: NextPage = () => {
 
   // Connected user has been invited
   return (
-    <div className="max-w-sm mx-auto flex flex-col items-center gap-6 mt-10">
-      <h1 className="text-3xl font-bold">Start to share your location</h1>
-      <div className="flex items-center gap-2">
+    <section className="flex flex-col gap-y-4 items-center justify-center w-full">
+      <h1 className="w-full text-center font-semibold text-base mb-2">Start to share your location</h1>
+      <div className="flex flex-col gap-y-4 items-center justify-center w-full">
         <Link href={`/chat/${inviterPublicKey}`}>
-          <Button>Start</Button>
+          <button className="btn btn-primary min-w-[15rem]">Start</button>
         </Link>
         <Link href="/chats">
-          <Button variant="outline">Decline</Button>
+          <button className="btn btn-secondary min-w-[15rem]">Decline</button>
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 
