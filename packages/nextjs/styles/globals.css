@@ -46,3 +46,9 @@ html::view-transition-new(root),
 html[data-theme="scaffoldEthDark"]::view-transition-old(root) {
   z-index: 9999;
 }
+
+@layer components {
+  .layout-container {
+    @apply px-3 md:px-4 mx-auto w-full max-w-5xl;
+  }
+}
