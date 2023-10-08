@@ -46,7 +46,7 @@ export const useSendLocation = ({ publicKey }: UseSendLocationParams) => {
       setCounter(counter => counter + 1);
     };
 
-    const intervalId = setInterval(callback, 5000);
+    const intervalId = setInterval(callback, 1000);
 
     return () => {
       clearInterval(intervalId);

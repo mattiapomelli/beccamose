@@ -1,10 +1,14 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useHasMounted } from "~~/hooks/useHasMounted";
 import { useReceive } from "~~/sdk-new/hooks/useReceive";
-// import { Button } from "~~/components/ui/Button";
 import { useSendLocation } from "~~/sdk-new/hooks/useSendLocation";
 import { useDerivedAccount } from "~~/sdk/crypto";
+
+const Map = dynamic(() => import("../../components/my-map/my-map"), {
+  ssr: false,
+});
 
 const InvitePage: NextPage = () => {
   const router = useRouter();
@@ -24,6 +28,10 @@ const InvitePage: NextPage = () => {
 
   return (
     <div>
+      <Map
+        position1={[coords?.latitude || 0, coords?.longitude || 0]}
+        position2={[otherCoords?.latitude || 0, otherCoords?.longitude || 0]}
+      />
       <div>Send</div>
       <div>Public key: {derivedAccount?.account.publicKey}</div>
       <div>Private key: {derivedAccount?.privateKey}</div>
