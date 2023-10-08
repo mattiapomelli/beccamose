@@ -50,7 +50,7 @@ const MyMap = ({ position1, position2 }: MyMapProps) => {
   if ((position1[0] === 0 && position1[1] === 0) || !myPersonalIcon) return null;
 
   return (
-    <MapContainer center={position1} zoom={50} style={{ height: "400px", width: "100%" }}>
+    <MapContainer center={position1} zoom={50} className="h-96 w-full rounded-btn z-10">
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
