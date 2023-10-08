@@ -2,9 +2,22 @@
   "short_name": "Beccamose",
   "name": "Beccamose",
   "description": "Wallet-to-wallet private location sharing",
-  "icons": [],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#90f6ff"
+  "background_color": "#90f6ff",
+  "icons": [
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
