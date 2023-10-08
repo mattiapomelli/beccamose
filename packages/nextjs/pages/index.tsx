@@ -3,12 +3,10 @@ import type { NextPage } from "next";
 import Blockies from "react-blockies";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { Button } from "~~/components/ui/Button";
-import { useStoredChats } from "~~/sdk/hooks/useStoredChats";
+import { useChats } from "~~/sdk/hooks/useChats";
 
 const ChatsPage: NextPage = () => {
-  const { data: chats } = useStoredChats();
-
-  console.log("CHATS: ", chats);
+  const { chats } = useChats();
 
   return (
     <>
