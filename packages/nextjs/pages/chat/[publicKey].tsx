@@ -2,32 +2,29 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useHasMounted } from "~~/hooks/useHasMounted";
-import { useConnectedPeers } from "~~/sdk/hooks/useConnectedPeers";
-import { useReceiveLocation } from "~~/sdk/hooks/useReceiveLocation";
-import { useShareLocation } from "~~/sdk/hooks/useShareLocation";
+import { useReceive } from "~~/sdk-new/hooks/useReceive";
+import { useSendLocation } from "~~/sdk-new/hooks/useSendLocation";
+import { useDerivedAccount } from "~~/sdk/crypto";
 
 const Map = dynamic(() => import("../../components/my-map/my-map"), {
   ssr: false,
 });
 
-const ChatPage: NextPage = () => {
+const InvitePage: NextPage = () => {
   const router = useRouter();
-  const otherPublicKey = router.query.publicKey?.toString();
+  const publicKey = router.query.publicKey?.toString() as `0x${string}`;
 
   const hasMounted = useHasMounted();
+  const { derivedAccount } = useDerivedAccount();
 
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } = useShareLocation({
-    enabled: true,
-    publicKey: (otherPublicKey || "") as `0x${string}`,
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } = useSendLocation({
+    publicKey,
   });
+  const { coords: otherCoords } = useReceive();
 
-  const { coords: otherCoords } = useReceiveLocation({
-    publicKey: (otherPublicKey || "") as `0x${string}`,
-  });
-
-  const { allConnected, lightPushPeers, filterPeers } = useConnectedPeers();
-
-  if (!hasMounted) return null;
+  if (!hasMounted) {
+    return null;
+  }
 
   return (
     <div>
@@ -35,27 +32,18 @@ const ChatPage: NextPage = () => {
         position1={[coords?.latitude || 0, coords?.longitude || 0]}
         position2={[otherCoords?.latitude || 0, otherCoords?.longitude || 0]}
       />
-
       <div className="bg-warning rounded-md p-4">
-        <h3 className="font-bold">Debug Zone</h3>
-        <div>Peers Connected: {allConnected?.length}</div>
-        <div>Push Peers Connected: {lightPushPeers?.length}</div>
-        <div>Filter Peers Connected: {filterPeers?.length}</div>
-        <div>Is location enabled: {isGeolocationEnabled.toString()}</div>
-        <div>Is location available: {isGeolocationAvailable.toString()}</div>
-        <div>My Lat: {coords?.latitude}</div>
-        <div>
-          My Long:
-          {coords?.longitude}
-        </div>
-        <div>Other Lat: {otherCoords?.latitude}</div>
-        <div>
-          Other Long:
-          {otherCoords?.longitude}
-        </div>
+        <div>Public key: {derivedAccount?.account.publicKey}</div>
+        <div>Private key: {derivedAccount?.privateKey}</div>
+        <div>isGeolocationAvailable: {isGeolocationAvailable.toString()}</div>
+        <div>isGeolocationEnabled: {isGeolocationEnabled.toString()}</div>
+        <div>Latitude: {coords?.latitude}</div>
+        <div>Longitude: {coords?.longitude}</div>
+        <div>Other Latitude: {otherCoords?.latitude}</div>
+        <div>Other Longitude: {otherCoords?.longitude}</div>
       </div>
     </div>
   );
 };
 
-export default ChatPage;
+export default InvitePage;

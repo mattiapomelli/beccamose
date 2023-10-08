@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { enrTree, wakuDnsDiscovery } from "@waku/dns-discovery";
 import { wakuPeerExchangeDiscovery } from "@waku/peer-exchange";
-import { createLightNode, waitForRemotePeer } from "@waku/sdk";
+import { Protocols, createLightNode, waitForRemotePeer } from "@waku/sdk";
 
 export const useNode = () => {
   return useQuery({
@@ -20,7 +20,9 @@ export const useNode = () => {
       await node.start();
 
       // Wait for a successful peer connection
-      await waitForRemotePeer(node);
+      await waitForRemotePeer(node, [Protocols.Filter, Protocols.LightPush, Protocols.Store]);
+
+      console.log("Node is ready");
 
       return node;
     },
